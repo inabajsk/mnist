@@ -1,0 +1,13 @@
+CC = gcc -O2 -falign-functions=8 -fPIC -Dx86_64
+OBJOPT = -o 
+OUTOPT = -o 
+LD = gcc
+SOFLAGS = -shared
+EXELD = gcc
+EXESFX = 
+LSFX = so
+LPFX = lib
+LIBS = -L$(ARCHDIR)
+
+CFLAGS		= -I. -I.. -fPIC -DLinux -w -falign-functions=8 -DGCC3 -DGCC -DTHREADED -DPTHREAD -fpic -D$(ARCHDIR) -I$(EUSDIR)/include
+LDFLAGS		= -L. -L..

@@ -1,0 +1,59 @@
+ifneq ($(ARCHDIR),)
+ARCH=$(ARCHDIR)
+else
+ARCH=LinuxARM
+endif
+
+THREAD= -DTHREADED -DPTHREAD
+MFLAGS=
+XVERSION=X_V11R6_1
+
+MACHINE=$(shell uname -m | sed 's/\(armv[0-9]\).*/\1/')
+
+GCC_MAJOR_VERSION=$(shell gcc -dumpversion | sed -e 's/\([0-9]\)\.\([0-9]\)\([\.0-9]*\)/\1/')
+GCC_MINOR_VERSION=$(shell gcc -dumpversion | sed -e 's/\([0-9]\)\.\([0-9]\)\([\.0-9]*\)/\2/')
+ifeq ($(GCC_MAJOR_VERSION), 2)
+ CPU_OPTIMIZE=
+ ALIGN_FUNCTIONS="-malign-functions=4"
+ ADD_CFLAGS=-fno-stack-protector -fpic
+else
+ ifeq ($(MACHINE), aarch64)
+   CPU_OPTIMIZE=-march=armv8-a
+   ALIGN_FUNCTIONS=-falign-functions=8
+   ADD_CFLAGS=-fPIC -Darmv8
+ else
+   CPU_OPTIMIZE=-march=$(MACHINE)
+   ALIGN_FUNCTIONS=-falign-functions=4
+   ADD_CFLAGS=-fno-stack-protector -fpic
+ endif
+ GCC3=-DGCC3
+endif
+
+#CFLAGS	= -I. -I.. -fPIC -DLinux -w -falign-functions=8 -DGCC3 -DGCC -DTHREADED -DPTHREAD -fpic -D$(ARCHDIR) -I$(EUSDIR)/include
+
+CFLAGS=$(WFLAGS) -D$(MACHINE) -DLinux -DARM -D_REENTRANT -DVERSION=\"$(VERSION)\" \
+	-DLIB6 $(ALIGN_FUNCTIONS) $(ADD_CFLAGS) \
+        $(DEBUG) $(CPU_OPTIMIZE) $(THREAD) -D$(XVERSION) \
+	-DGCC $(GCC3) \
+        -I/usr/include -I/usr/X11R6/include -I$(EUSDIR)/include
+
+ADD_LDFLAGS=
+ifneq (,$(findstring t,$(shell if [ \( $(GCC_MAJOR_VERSION) -eq 4 -a $(GCC_MINOR_VERSION) -ge 5 \) -o  $(GCC_MAJOR_VERSION) -ge 5 ] ; then echo t ;fi )))
+ADD_LDFLAGS += -Wl,--no-as-needed
+endif
+
+SOFLAGS= -shared -Xlinker -build-id
+LDFLAGS= -rdynamic -fno-stack-protector -Wl,-z,execstack $(ADD_LDFLAGS)
+
+#CC = c++ -O2 -fPIC -Daarch64 -DARM
+CC = gcc
+OBJOPT = -o 
+OUTOPT = -o 
+#LD = c++
+LD = gcc
+SOFLAGS = -shared
+EXELD = c++
+EXESFX = 
+LSFX = so
+LPFX = lib
+LIBS = -L$(ARCHDIR) -lRAPID 
