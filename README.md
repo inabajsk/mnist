@@ -1,19 +1,20 @@
 # mnist in euslisp with blas
 
-Instration:
+# Instration:
 
-(1) install ROS-O
+(1) install ROS-O  
     follow https://ros.packages.techfak.net/
 	
-(2) install roseus
+(2) install roseus  
     sudo apt install ros-one-roseus
 
-(3) setup
+(3) setup  
     make
 
-(4) run
-    roseus nn.l
-    $ (test-mnist-batch 200)
-    $ (test-mnist-test)
-    $ (test-mnist-train)
-    
+# Execution:
+
+    roseus nn.l  
+
+    $ (test-mnist-batch 200)  
+    $ (test-mnist-test)  
+    $ (test-mnist-train)  
