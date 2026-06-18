@@ -1,6 +1,6 @@
 # mnist in euslisp with blas
 
-# Instration:
+# Installation:
 
 (1) install ROS-O  
     follow https://ros.packages.techfak.net/
