@@ -36,3 +36,14 @@ Connection methods (see docs/mnist_cuda.pptx):
 - B: EusLisp C extension module like MATPROD (CUDAPROD/src/cudaprod.c)
 - C: defforeign libcublas.so directly (cuda-direct.l)
 - D: separate Python/PyTorch process via piped-fork (cuda-ipc.l, ipc/torch_server.py)
+
+# CNN version
+
+    (cd CUDA; make)
+    roseus nn-cnn.l
+
+    $ (test-mnist-cnn *cnn-net*)                 ;; CNN (conv5x5 20 - pool - conv5x5 50 - pool - fc500 - fc10), GPU FP32
+    $ (test-mnist-cnn *lenet5-net*)              ;; LeNet-5 like CNN
+    $ (test-mnist-cnn *mlp-net* :params :nnl)    ;; without CNN (same MLP and initial weights as nn.l)
+    $ (test-mnist-cnn *cnn-net* :device :cpu)    ;; CPU (OpenMP + OpenBLAS)
+    $ (bench-mnist-cnn)                          ;; comparison (see docs/mnist_cnn.pptx)
