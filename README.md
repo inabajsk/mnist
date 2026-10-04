@@ -47,3 +47,13 @@ Connection methods (see docs/mnist_cuda.pptx):
     $ (test-mnist-cnn *mlp-net* :params :nnl)    ;; without CNN (same MLP and initial weights as nn.l)
     $ (test-mnist-cnn *cnn-net* :device :cpu)    ;; CPU (OpenMP + OpenBLAS)
     $ (bench-mnist-cnn)                          ;; comparison (see docs/mnist_cnn.pptx)
+
+# Smartphone (browser) version
+
+    python3 phone/make_data.py                     # data, weights and ONNX models from the EusLisp results
+    cd phone/site && python3 -m http.server 8000   # open http://<this PC>:8000/ on a phone in the same LAN
+
+The page runs the MLP and CNN with hand-written JavaScript and TensorFlow.js
+(WASM / WebGL / WebGPU / CPU) and measures inference and training time.
+phone/onnx/*.onnx can be used from apps (ONNX Runtime Mobile, Core ML via coremltools).
+See docs/mnist_phone.pptx.

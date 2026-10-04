@@ -1,0 +1,12 @@
+exec(open('freeze_sym.py').read().split("R={}")[0])
+rng=np.random.default_rng(0)
+P=init(0,same_conv1=True)
+W2=P[3][0].reshape(50,20,25); W2[:]=W2[:,0:1,:]; P[3]=(W2.reshape(50,500).copy(),P[3][1])
+lib.cnn_create(spec,1000,32,1)
+for l,(W,b) in P.items(): lib.cnn_set_param(l,np.ascontiguousarray(W),np.ascontiguousarray(b))
+lib.cnn_upload(0,Xtr,ytr,60000); lib.cnn_upload(1,Xte,yte,10000)
+for e in range(3):
+    for i in range(300): lib.cnn_train_batch(i*200,200,0.001)
+W=np.zeros((20,25)); b=np.zeros(20); lib.cnn_get_param(0,W,b)
+print('full-symmetric: max |W_i - W_0| after 3 epochs', np.abs(W-W[0]).max(), 'test', lib.cnn_eval(1,1000,np.zeros(1))/100)
+import json; R=json.load(open('freeze_sym.json')); R['fullsym_maxdiff']=float(np.abs(W-W[0]).max()); R['fullsym_acc3']=lib.cnn_eval(1,1000,np.zeros(1))/100; json.dump(R,open('freeze_sym.json','w'))

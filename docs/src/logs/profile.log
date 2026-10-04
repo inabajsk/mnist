@@ -1,0 +1,63 @@
+;; .eusrc executed!! *rcb4eus-dir*=/home/mi/kxreus added, *load-path* updated!!
+(test-mnist-train)
+;;(test-mnist-batch 200) ;; train from train-images
+;;(test-mnist-test) ;; test test-images
+;;(test-mnist-train) ;; test train-images
+TIME load-nn.l wall      0.011 s
+TIME load-datasets wall     22.997 s cpu     24.070 s
+DATA 60000 60000 10000 10000
+(in:   784    out:  1000)
+(in:  1000    out:  1000)
+(in:  1000    out:    10)
+
+TIME epoch1 batch200 wall     31.914 s cpu    576.340 s loss   0.3428
+PROF epoch1-batch200
+PROF :fwd-softmax     19.005
+PROF :bp-output-delta      4.547
+PROF :bp-alloc    232.982
+PROF :up-w-daxpy    411.897
+PROF :up-b      8.782
+PROF :up-alloc   3513.029
+PROF :up-db-dgemm    110.582
+PROF :up-dw-dgemm   3195.092
+PROF :total-epoch  31914.078
+PROF :fwd-extended-matrix    778.529
+PROF :fwd-relu   1358.632
+PROF :up-transpose-delta    298.194
+PROF :up-wt-transpose   1425.053
+PROF :loss    118.065
+PROF :bp-relu-diff-mprod   1588.127
+PROF :fwd-dgemm   3520.734
+PROF :bp-dgemm   1948.410
+PROF :batch-make  13560.154
+(in:   784    out:  1000)
+(in:  1000    out:  1000)
+(in:  1000    out:    10)
+
+SWEEP bs 10 wall_per_60000    172.425 s cpu_per_60000   3275.800 s
+(in:   784    out:  1000)
+(in:  1000    out:  1000)
+(in:  1000    out:    10)
+
+SWEEP bs 50 wall_per_60000     44.839 s cpu_per_60000    839.700 s
+(in:   784    out:  1000)
+(in:  1000    out:  1000)
+(in:  1000    out:    10)
+
+SWEEP bs 100 wall_per_60000     30.477 s cpu_per_60000    579.900 s
+(in:   784    out:  1000)
+(in:  1000    out:  1000)
+(in:  1000    out:    10)
+
+SWEEP bs 200 wall_per_60000     21.542 s cpu_per_60000    393.900 s
+(in:   784    out:  1000)
+(in:  1000    out:  1000)
+(in:  1000    out:    10)
+
+munmap_chunk(): invalid pointer
+timeout: 監視しているコマンドがコアダンプしました
+/bin/bash: 1 行: 2905282 中止                  timeout 3000 irteusgl /tmp/claude-1001/-home-mi-mnist/137a571b-9a80-4a1c-8647-53667b8e1fcb/scratchpad/work/profile.l
+
+real	1m38.677s
+user	5m59.094s
+sys	12m52.373s

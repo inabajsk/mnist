@@ -1,0 +1,370 @@
+{
+ "dgx_browser": {
+  "info": {
+   "ua": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.0.0 Safari/537.36",
+   "cores": 20,
+   "memoryGB": 32,
+   "screen": "800×600 @1x",
+   "gpu": "ANGLE (NVIDIA, Vulkan 1.4.312 (NVIDIA NVIDIA GB10 (0x00002E12)), NVIDIA)",
+   "webgpu": "なし",
+   "crossOriginIsolated": false
+  },
+  "results": [
+   {
+    "method": "JavaScript（自作）",
+    "kind": "mlp",
+    "task": "MLP 推論",
+    "n": 1000,
+    "sec": 3.425800000011921,
+    "acc": 0.983,
+    "accOk": true
+   },
+   {
+    "method": "JavaScript（自作）",
+    "kind": "cnn",
+    "task": "CNN 推論",
+    "n": 1000,
+    "sec": 5.7786999999880795,
+    "acc": 0.994,
+    "accOk": true
+   },
+   {
+    "method": "JavaScript（自作）",
+    "kind": "mlp",
+    "task": "MLP 学習",
+    "n": 600,
+    "sec": 4.764599999964237
+   },
+   {
+    "method": "JavaScript（自作）",
+    "kind": "cnn",
+    "task": "CNN 学習",
+    "n": 600,
+    "sec": 4.659
+   },
+   {
+    "method": "TensorFlow.js WASM",
+    "kind": "mlp",
+    "task": "MLP 推論",
+    "n": 10000,
+    "sec": 1.4156000000238418,
+    "acc": 0.9824,
+    "accOk": true
+   },
+   {
+    "method": "TensorFlow.js WASM",
+    "kind": "mlp",
+    "task": "MLP 推論 1 枚ずつ",
+    "n": 1,
+    "sec": 0.0005
+   },
+   {
+    "method": "TensorFlow.js WASM",
+    "kind": "cnn",
+    "task": "CNN 推論",
+    "n": 10000,
+    "sec": 2.65,
+    "acc": 0.9917,
+    "accOk": true
+   },
+   {
+    "method": "TensorFlow.js WASM",
+    "kind": "cnn",
+    "task": "CNN 推論 1 枚ずつ",
+    "n": 1,
+    "sec": 0.0005
+   },
+   {
+    "method": "TensorFlow.js WASM",
+    "kind": "mlp",
+    "task": "MLP 学習",
+    "n": 6000,
+    "sec": 22.62190000003576,
+    "loss": 0.6129911804199218
+   },
+   {
+    "method": "TensorFlow.js WASM",
+    "skipped": "CNN 学習: この方法では動きません（Kernel 'Conv2DBackpropFilter' not registered for backend 'wasm'）"
+   },
+   {
+    "method": "TensorFlow.js WebGL（GPU）",
+    "kind": "mlp",
+    "task": "MLP 推論",
+    "n": 10000,
+    "sec": 0.7682000000476837,
+    "acc": 0.9824,
+    "accOk": true
+   },
+   {
+    "method": "TensorFlow.js WebGL（GPU）",
+    "kind": "mlp",
+    "task": "MLP 推論 1 枚ずつ",
+    "n": 1,
+    "sec": 0.006399999976158142
+   },
+   {
+    "method": "TensorFlow.js WebGL（GPU）",
+    "kind": "cnn",
+    "task": "CNN 推論",
+    "n": 10000,
+    "sec": 1.4915999999642373,
+    "acc": 0.9917,
+    "accOk": true
+   },
+   {
+    "method": "TensorFlow.js WebGL（GPU）",
+    "kind": "cnn",
+    "task": "CNN 推論 1 枚ずつ",
+    "n": 1,
+    "sec": 0.007199999988079071
+   },
+   {
+    "method": "TensorFlow.js WebGL（GPU）",
+    "kind": "mlp",
+    "task": "MLP 学習",
+    "n": 6000,
+    "sec": 0.22969999998807908,
+    "loss": 0.6129911041259766
+   },
+   {
+    "method": "TensorFlow.js WebGL（GPU）",
+    "kind": "cnn",
+    "task": "CNN 学習",
+    "n": 6000,
+    "sec": 1.0911000000238418,
+    "loss": 0.916120376586914
+   },
+   {
+    "method": "TensorFlow.js WebGPU（GPU）",
+    "kind": "mlp",
+    "task": "MLP 推論",
+    "n": 10000,
+    "sec": 0.33780000001192095,
+    "acc": 0.9824,
+    "accOk": true
+   },
+   {
+    "method": "TensorFlow.js WebGPU（GPU）",
+    "kind": "mlp",
+    "task": "MLP 推論 1 枚ずつ",
+    "n": 1,
+    "sec": 0.003800000011920929
+   },
+   {
+    "method": "TensorFlow.js WebGPU（GPU）",
+    "kind": "cnn",
+    "task": "CNN 推論",
+    "n": 10000,
+    "sec": 0.479,
+    "acc": 0.9917,
+    "accOk": true
+   },
+   {
+    "method": "TensorFlow.js WebGPU（GPU）",
+    "kind": "cnn",
+    "task": "CNN 推論 1 枚ずつ",
+    "n": 1,
+    "sec": 0.005
+   },
+   {
+    "method": "TensorFlow.js WebGPU（GPU）",
+    "kind": "mlp",
+    "task": "MLP 学習",
+    "n": 6000,
+    "sec": 0.1432000000476837,
+    "loss": 0.6129910659790039
+   },
+   {
+    "method": "TensorFlow.js WebGPU（GPU）",
+    "kind": "cnn",
+    "task": "CNN 学習",
+    "n": 6000,
+    "sec": 1.4372000000476837,
+    "loss": 0.9153189086914062
+   },
+   {
+    "method": "TensorFlow.js CPU（JS）",
+    "kind": "mlp",
+    "task": "MLP 推論",
+    "n": 2000,
+    "sec": 13.09,
+    "acc": 0.987,
+    "accOk": true
+   },
+   {
+    "method": "TensorFlow.js CPU（JS）",
+    "kind": "mlp",
+    "task": "MLP 推論 1 枚ずつ",
+    "n": 1,
+    "sec": 0.005400000035762787
+   },
+   {
+    "method": "TensorFlow.js CPU（JS）",
+    "kind": "cnn",
+    "task": "CNN 推論",
+    "n": 2000,
+    "sec": 18.83230000001192,
+    "acc": 0.9955,
+    "accOk": true
+   },
+   {
+    "method": "TensorFlow.js CPU（JS）",
+    "kind": "cnn",
+    "task": "CNN 推論 1 枚ずつ",
+    "n": 1,
+    "sec": 0.006700000047683716
+   },
+   {
+    "method": "TensorFlow.js CPU（JS）",
+    "kind": "mlp",
+    "task": "MLP 学習",
+    "n": 1000,
+    "sec": 15.845800000011922,
+    "loss": 1.122933578491211
+   },
+   {
+    "method": "TensorFlow.js CPU（JS）",
+    "kind": "cnn",
+    "task": "CNN 学習",
+    "n": 1000,
+    "sec": 126.34530000001192,
+    "loss": 2.1602081298828124
+   }
+  ]
+ },
+ "phones": [],
+ "ref": {
+  "cuda_cnn32": 0.426,
+  "cuda_mlp32": 0.099
+ },
+ "epoch_rows": [
+  [
+   "DGX: EusLisp + OpenBLAS（nn.l）",
+   26.1,
+   null
+  ],
+  [
+   "DGX: C + OpenBLAS（CPU）",
+   4.25,
+   28.97
+  ],
+  [
+   "DGX: CUDA GPU（FP32）",
+   0.099,
+   0.426
+  ],
+  [
+   "DGX ブラウザ 最速（TF.js WebGPU / TF.js WebGL）",
+   1.4320000004768372,
+   10.911000000238419
+  ],
+  [
+   "DGX ブラウザ JS 自作",
+   476.4599999964237,
+   465.9
+  ]
+ ],
+ "infer_rows": [
+  [
+   "DGX: CUDA GPU（FP32, 常駐）",
+   0.00042389999999999995,
+   0.0041264000000000006,
+   null,
+   null
+  ],
+  [
+   "DGX: ONNX Runtime（ARM CPU 4 スレッド）",
+   0.01956,
+   0.03805,
+   0.07,
+   0.089
+  ],
+  [
+   "DGX ブラウザ 最速（TF.js WebGPU）",
+   0.03378000000119209,
+   0.0479,
+   0.5,
+   0.5
+  ],
+  [
+   "　DGX ブラウザ TF.js WASM",
+   0.14156000000238417,
+   0.265,
+   0.5,
+   0.5
+  ],
+  [
+   "　DGX ブラウザ TF.js WebGL",
+   0.07682000000476838,
+   0.1491599999964237,
+   6.399999976158142,
+   7.199999988079071
+  ],
+  [
+   "　DGX ブラウザ TF.js WebGPU",
+   0.03378000000119209,
+   0.0479,
+   3.800000011920929,
+   5.0
+  ],
+  [
+   "　DGX ブラウザ JS 自作",
+   3.425800000011921,
+   5.7786999999880795,
+   null,
+   null
+  ]
+ ],
+ "artifact_url": "https://claude.ai/artifact/3373AhmSK4JkSFxqCw6e3S",
+ "dgx_notes": [
+  "GPU を使う WebGL・WebGPU が最速。CNN 1 エポックは TF.js WebGL で 10.9 秒（ネイティブの CUDA 426 ms の約 26 倍）",
+  "自作 JS は 1 コアの素朴なループで、WebGPU の数百倍遅い。TF.js CPU はさらに遅い（参照用の実装で最適化されていない）",
+  "WASM は SIMD 版の単一スレッド（このページは cross-origin isolation がないのでスレッドが使えない）"
+ ],
+ "summary": "スマートフォンでの計測はまだです（計測ページで実行すると入ります）。DGX Spark のブラウザでは WebGPU / WebGL が速く、CNN の 1 エポックが約 11〜14 秒、MLP が 1.4 秒だった。",
+ "epoch_notes": [
+  "ネイティブの CUDA（DGX）が最速。ブラウザの GPU（WebGL / WebGPU）はその数倍〜数十倍",
+  "同じ JS でも CPU だけの方法は GPU の方法より 2〜3 桁遅い",
+  "スマートフォンの値は短い計測からの換算。長く動かすと熱で遅くなることがある"
+ ],
+ "infer_notes": [
+  "まとめて処理するなら GPU（WebGPU / WebGL）が速い",
+  "1 枚だけの応答は、GPU に仕事を渡す手間（数 ms）が目立ち、WASM（CPU）の方が速いことが多い",
+  "WASM の 1 枚の時間はブラウザのタイマーの細かさ（0.1〜0.5 ms 程度）で丸められている",
+  "ネイティブの ONNX Runtime は 1 枚 0.07〜0.09 ms。アプリにすればブラウザより速くできる"
+ ],
+ "discussion": [
+  [
+   "GPU は「まとめて」で効く",
+   "1,000 枚ずつまとめると WebGL / WebGPU が CPU より 1〜2 桁速い。1 枚ずつでは GPU を呼ぶ手間が勝つ"
+  ],
+  [
+   "ブラウザの CPU は 1 コア",
+   "JS も WASM も、このページでは 1 スレッド。WASM の SIMD で JS より数十倍速い"
+  ],
+  [
+   "NPU はブラウザから使えない",
+   "Neural Engine や Hexagon を使うには Core ML・LiteRT などのアプリが必要。WebNN が広まれば変わる"
+  ],
+  [
+   "精度と速さ",
+   "ブラウザの GPU は FP32（端末によっては FP16）。今回の重みで認識数は EusLisp と同じだった"
+  ],
+  [
+   "熱と電池",
+   "スマートフォンは長く全力で動かすと遅くなる。学習は DGX Spark、推論はスマートフォン、という分担が現実的"
+  ],
+  [
+   "同じ ARM の仲間",
+   "DGX Spark もスマートフォンも ARM CPU + GPU + 統合メモリ。規模の違いが速さの違いになる"
+  ]
+ ],
+ "conclusion": [
+  "スマートフォンで NN を動かすには、ブラウザ・アプリ（Core ML / LiteRT / ONNX Runtime）・OS の AI 機能・Termux・サーバーの方法がある",
+  "EusLisp で学習した MNIST の MLP と CNN を、ブラウザで動く計測ページにした（自作 JS と TensorFlow.js の 5 方式、推論と学習）",
+  "スマートフォンでの計測はまだです（計測ページで実行すると入ります）。DGX Spark のブラウザでは WebGPU / WebGL が速く、CNN の 1 エポックが約 11〜14 秒、MLP が 1.4 秒だった。",
+  "速く動かすなら GPU をまとめて使う。NPU まで使うならアプリにする（ONNX モデルを用意済み）"
+ ],
+ "page_w": 1170,
+ "page_h": 7200
+}

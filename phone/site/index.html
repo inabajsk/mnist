@@ -1,0 +1,462 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"></head><body>
+<title>MNIST 端末ベンチマーク</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&family=BIZ+UDGothic&display=swap">
+<style>
+/* 計測ノートの体裁: 紺のインク + 赤ペンの強調。表と数値が主役 */
+:root {
+  --bg: #f7f8fb; --panel: #ffffff; --ink: #14213d; --muted: #5b6577; --line: #d9dee8;
+  --accent: #e4572e; --blue: #3a6ea5; --good: #2e7d4f; --warn: #b26a00;
+  --font: "BIZ UDPGothic", "Hiragino Sans", "Yu Gothic", "Meiryo", sans-serif;
+  --mono: "BIZ UDGothic", "Menlo", "Consolas", monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0f1626; --panel: #172036; --ink: #e8ecf5; --muted: #9aa6bd; --line: #2a3654;
+  --accent: #ff7a52; --blue: #79a7da; --good: #5fbf86; --warn: #e3a54a; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #0f1626; --panel: #172036; --ink: #e8ecf5; --muted: #9aa6bd; --line: #2a3654;
+  --accent: #ff7a52; --blue: #79a7da; --good: #5fbf86; --warn: #e3a54a; color-scheme: dark }
+body { background: var(--bg); color: var(--ink); font-family: var(--font); font-size: 15px; line-height: 1.6; }
+.wrap { max-width: 980px; margin: 0 auto; padding-inline: 16px; padding-block: 20px 48px; display: grid; gap: 18px; }
+h1 { font-size: 1.6rem; margin: 0; text-wrap: balance; }
+h2 { font-size: 1.1rem; margin: 0 0 8px; }
+p { margin: 0; }
+.lead { color: var(--muted); max-width: 65ch; }
+.panel { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; min-width: 0; }
+.row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.kv { display: grid; grid-template-columns: max-content 1fr; gap: 2px 12px; font-size: .9rem; }
+.kv dt { color: var(--muted); }
+.kv dd { margin: 0; word-break: break-all; font-family: var(--mono); font-size: .85rem; }
+label { font-size: .9rem; color: var(--muted); }
+input[type=text] { font: inherit; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); color: var(--ink); min-width: 0; flex: 1 1 200px; }
+select { font: inherit; padding: 8px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); color: var(--ink); }
+button { font: inherit; font-weight: 700; padding: 10px 18px; border-radius: 8px; border: 0; background: var(--accent); color: #fff; cursor: pointer; }
+button:disabled { opacity: .5; cursor: default; }
+button:focus-visible, input:focus-visible, select:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
+.bar { height: 8px; background: var(--line); border-radius: 4px; overflow: hidden; }
+.bar > i { display: block; height: 100%; width: 0; background: var(--blue); transition: width .2s; }
+.status { font-size: .9rem; color: var(--muted); min-height: 1.4em; }
+.tablewrap { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: .88rem; font-variant-numeric: tabular-nums; }
+th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+th { color: var(--muted); font-weight: 700; font-size: .8rem; letter-spacing: .02em; }
+td.num { text-align: right; font-family: var(--mono); }
+.pill { display: inline-block; padding: 1px 8px; border-radius: 999px; font-size: .75rem; border: 1px solid var(--line); color: var(--muted); }
+.pill.ok { color: var(--good); border-color: var(--good); }
+.pill.ng { color: var(--warn); border-color: var(--warn); }
+.note { font-size: .85rem; color: var(--muted); }
+td.task, td.wrap { white-space: normal; }
+td.task strong { display: block; font-weight: 700; }
+td.task small { display: block; color: var(--muted); font-size: .75rem; }
+.hl { color: var(--accent); font-weight: 700; }
+</style>
+
+<div class="wrap">
+  <header style="display:grid;gap:6px">
+    <h1>MNIST 端末ベンチマーク</h1>
+    <p class="lead">EusLisp で学習した MNIST の全結合ネット（MLP, 784-1000-1000-10）と CNN（畳み込み 20/50ch）を、この端末のブラウザで動かして推論と学習の時間を測ります。結果はこのページに保存され、DGX Spark（GPU / CPU）の結果と比べられます。</p>
+  </header>
+
+  <section class="panel" aria-labelledby="dev-h">
+    <h2 id="dev-h">この端末</h2>
+    <dl class="kv" id="devinfo"><dt>読み込み中</dt><dd>…</dd></dl>
+  </section>
+
+  <section class="panel" aria-labelledby="run-h" style="display:grid;gap:10px">
+    <h2 id="run-h">計測</h2>
+    <div class="row">
+      <label for="device-name">端末名</label>
+      <input type="text" id="device-name" placeholder="例: iPhone 16 Pro, Pixel 9, Galaxy S25">
+    </div>
+    <div class="row">
+      <label for="mode">計測量</label>
+      <select id="mode">
+        <option value="std">標準（3〜6 分）</option>
+        <option value="quick">短め（1〜2 分）</option>
+      </select>
+      <button id="run" type="button">計測を始める</button>
+    </div>
+    <div class="bar" aria-hidden="true"><i id="prog"></i></div>
+    <p class="status" id="status">データと重みを読み込んでいます…</p>
+    <p class="note">計測中は画面を消さずにお待ちください。重いブラウザタブは閉じておくと安定します。</p>
+  </section>
+
+  <section class="panel" aria-labelledby="res-h">
+    <h2 id="res-h">結果</h2>
+    <div class="tablewrap">
+      <table id="restable">
+        <thead><tr><th>方法・内容</th><th>1 枚あたり</th><th>6 万枚換算</th></tr></thead>
+        <tbody id="resbody"><tr><td colspan="3" class="note">「計測を始める」を押すと、ここに方法ごとの時間が並びます。</td></tr></tbody>
+      </table>
+    </div>
+    <p class="note" style="margin-top:8px">6 万枚換算: 学習は 1 エポック（60,000 枚）、推論は 60,000 枚を処理するとした場合の時間。</p>
+  </section>
+
+  <section class="panel" aria-labelledby="cmp-h">
+    <h2 id="cmp-h">DGX Spark との比較（1 エポックの学習, バッチ 200）</h2>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>環境・方法</th><th>MLP</th><th>CNN</th></tr></thead>
+        <tbody id="cmpbody"></tbody>
+      </table>
+    </div>
+    <p class="note" style="margin-top:8px">DGX Spark の値は前回の計測（GB10 GPU / 20 コア ARM CPU）。この端末の値は上の表の最速の方法。</p>
+  </section>
+
+  <section class="panel" aria-labelledby="saved-h">
+    <h2 id="saved-h">保存された計測</h2>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>日時</th><th>端末</th><th>最速の方法（MLP 学習）</th><th>MLP 1 エポック</th><th>CNN 1 エポック</th><th>CNN 推論 1 万枚</th></tr></thead>
+        <tbody id="savedbody"><tr><td colspan="6" class="note">まだ保存された計測はありません。計測が終わると自動でここに加わります。</td></tr></tbody>
+      </table>
+    </div>
+  </section>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tensorflow/4.22.0/tf.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-wasm@4.22.0/dist/tf-backend-wasm.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-webgpu@4.22.0/dist/tf-backend-webgpu.min.js"></script>
+<script>
+"use strict";
+// ---------- 参照値 (DGX Spark, 前回の計測) ----------
+const REF = [
+  ["DGX: EusLisp + OpenBLAS", 26.1, null],
+  ["DGX: C + OpenBLAS（CPU）", 4.25, 28.97],
+  ["DGX: CUDA（GPU）", 0.099, 0.426],
+  ["DGX: PyTorch（GPU）", 0.433, 0.611],
+];
+const $ = (id) => document.getElementById(id);
+const SHORT = { "JavaScript（自作）": "JS 自作", "TensorFlow.js WASM": "TF.js WASM", "TensorFlow.js WebGL（GPU）": "TF.js WebGL", "TensorFlow.js WebGPU（GPU）": "TF.js WebGPU", "TensorFlow.js CPU（JS）": "TF.js CPU" };
+const sleep0 = () => new Promise((r) => setTimeout(r, 0));
+const now = () => performance.now();
+const results = [];
+let DATA = null, info = {};
+
+function setStatus(t) { $("status").textContent = t; }
+function setProg(f) { $("prog").style.width = Math.round(f * 100) + "%"; }
+function fmtS(s) { return s >= 100 ? s.toFixed(0) + " 秒" : s >= 10 ? s.toFixed(1) + " 秒" : s >= 1 ? s.toFixed(2) + " 秒" : (s * 1000).toFixed(s < 0.01 ? 2 : 1) + " ms"; }
+function fmtMs(ms) { return ms >= 100 ? ms.toFixed(0) + " ms" : ms >= 1 ? ms.toFixed(2) + " ms" : (ms * 1000).toFixed(1) + " µs"; }
+function lsGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+function lsSet(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+
+// ---------- 端末情報 ----------
+async function deviceInfo() {
+  info.ua = navigator.userAgent;
+  info.cores = navigator.hardwareConcurrency || null;
+  info.memoryGB = navigator.deviceMemory || null;
+  info.screen = `${screen.width}×${screen.height} @${window.devicePixelRatio}x`;
+  try {
+    const c = document.createElement("canvas"); const gl = c.getContext("webgl2") || c.getContext("webgl");
+    const ext = gl && gl.getExtension("WEBGL_debug_renderer_info");
+    info.gpu = gl ? (ext ? gl.getParameter(ext.UNMASKED_RENDERER_WEBGL) : gl.getParameter(gl.RENDERER)) : "なし";
+  } catch (e) { info.gpu = "取得できません"; }
+  info.webgpu = "なし";
+  try {
+    if (navigator.gpu) {
+      const ad = await navigator.gpu.requestAdapter();
+      if (ad) { const i = ad.info || (ad.requestAdapterInfo ? await ad.requestAdapterInfo() : {}); info.webgpu = [i.vendor, i.architecture, i.device, i.description].filter(Boolean).join(" ") || "あり"; }
+    }
+  } catch (e) { info.webgpu = "取得できません"; }
+  info.crossOriginIsolated = !!window.crossOriginIsolated;
+  const dl = $("devinfo"); dl.textContent = "";
+  for (const [k, v] of [["ブラウザ", info.ua], ["CPU コア数", info.cores ?? "不明"], ["メモリ", info.memoryGB ? info.memoryGB + " GB 以上" : "不明"], ["画面", info.screen], ["GPU（WebGL）", info.gpu], ["WebGPU", info.webgpu]]) {
+    const dt = document.createElement("dt"); dt.textContent = k; const dd = document.createElement("dd"); dd.textContent = v; dl.append(dt, dd);
+  }
+}
+
+// ---------- データと重み ----------
+async function loadAll() {
+  // データは gzip 圧縮 + Base64 のテキストで置いてある
+  const get = async (f) => {
+    const b64 = (await (await fetch(f)).text()).trim(); const bin = atob(b64); const u8 = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) u8[i] = bin.charCodeAt(i);
+    return new Uint8Array(await new Response(new Blob([u8]).stream().pipeThrough(new DecompressionStream("gzip"))).arrayBuffer());
+  };
+  const [te, tr, mwu, cwu] = await Promise.all([get("mnist_test.gz.txt"), get("mnist_train6k.gz.txt"), get("mlp_w.gz.txt"), get("cnn_w.gz.txt")]);
+  const mw = mwu.buffer, cw = cwu.buffer;
+  const toF = (u8, n) => { const x = new Float32Array(n * 784); for (let i = 0; i < n * 784; i++) x[i] = u8[i] / 255; return x; };
+  const D = {
+    testX: toF(te, 10000), testY: te.slice(7840000), trainX: toF(tr, 6000), trainY: tr.slice(4704000),
+  };
+  const split = (buf, shapes) => { const f = new Float32Array(buf); let o = 0; return shapes.map((s) => { const n = s.reduce((a, b) => a * b, 1); const v = f.slice(o, o + n); o += n; return v; }); };
+  D.mlp = split(mw, [[1000, 784], [1000], [1000, 1000], [1000], [10, 1000], [10]]);
+  D.cnn = split(cw, [[20, 25], [20], [50, 500], [50], [500, 800], [500], [10, 500], [10]]);
+  return D;
+}
+// 学習の初期値: nn.l と同じ U(-0.08, 0.08), b = 0（シード付き乱数）
+function randInit(shapes, seed) {
+  let s = seed >>> 0; const rnd = () => { s = (s * 1664525 + 1013904223) >>> 0; return s / 4294967296; };
+  return shapes.map((sh, i) => { const n = sh.reduce((a, b) => a * b, 1); const v = new Float32Array(n); if (i % 2 === 0) for (let k = 0; k < n; k++) v[k] = rnd() * 0.16 - 0.08; return v; });
+}
+const MLP_SH = [[1000, 784], [1000], [1000, 1000], [1000], [10, 1000], [10]];
+const CNN_SH = [[20, 25], [20], [50, 500], [50], [500, 800], [500], [10, 500], [10]];
+
+// ---------- 自作の JavaScript 実装（Float32Array のループ） ----------
+// C[M×N] = A[M×K] · B[N×K]^T (+ bias)
+function mmT(A, B, M, N, K, bias, C) {
+  for (let i = 0; i < M; i++) { const ao = i * K, co = i * N;
+    for (let j = 0; j < N; j++) { const bo = j * K; let s = bias ? bias[j] : 0;
+      for (let k = 0; k < K; k++) s += A[ao + k] * B[bo + k]; C[co + j] = s; } }
+  return C;
+}
+function jsMlpForward(P, X, n, keep) {
+  const u1 = mmT(X, P[0], n, 1000, 784, P[1], new Float32Array(n * 1000)); const z1 = u1.map((v) => (v > 0 ? v : 0));
+  const u2 = mmT(z1, P[2], n, 1000, 1000, P[3], new Float32Array(n * 1000)); const z2 = u2.map((v) => (v > 0 ? v : 0));
+  const y = mmT(z2, P[4], n, 10, 1000, P[5], new Float32Array(n * 10));
+  softmaxRows(y, n, 10);
+  return keep ? { u1, z1, u2, z2, y } : y;
+}
+function softmaxRows(y, n, c) {
+  for (let r = 0; r < n; r++) { let mx = -1e30; for (let j = 0; j < c; j++) mx = Math.max(mx, y[r * c + j]); let s = 0;
+    for (let j = 0; j < c; j++) { const e = Math.exp(y[r * c + j] - mx); y[r * c + j] = e; s += e; } for (let j = 0; j < c; j++) y[r * c + j] /= s; }
+}
+// 勾配はバッチ和, W ← W − η ΔW（nn.l と同じ）
+function jsMlpTrainBatch(P, X, Y, n, lr) {
+  const f = jsMlpForward(P, X, n, true);
+  const d3 = f.y.slice(); for (let r = 0; r < n; r++) d3[r * 10 + Y[r]] -= 1;
+  const backT = (d, W, nOut, nIn, u) => { const o = new Float32Array(n * nIn); // o = (d · W) ⊙ (u ≥ 0)
+    for (let r = 0; r < n; r++) for (let i = 0; i < nOut; i++) { const dv = d[r * nOut + i]; if (dv === 0) continue; const wo = i * nIn, oo = r * nIn; for (let j = 0; j < nIn; j++) o[oo + j] += dv * W[wo + j]; }
+    for (let k = 0; k < o.length; k++) if (u[k] < 0) o[k] = 0; return o; };
+  const d2 = backT(d3, P[4], 10, 1000, f.u2), d1 = backT(d2, P[2], 1000, 1000, f.u1);
+  const upd = (W, b, d, z, nOut, nIn) => { for (let r = 0; r < n; r++) for (let i = 0; i < nOut; i++) { const g = lr * d[r * nOut + i]; if (g === 0) continue; b[i] -= g; const wo = i * nIn, zo = r * nIn; for (let j = 0; j < nIn; j++) W[wo + j] -= g * z[zo + j]; } };
+  upd(P[4], P[5], d3, f.z2, 10, 1000); upd(P[2], P[3], d2, f.z1, 1000, 1000); upd(P[0], P[1], d1, X, 1000, 784);
+}
+// CNN（1 枚ずつ, NHWC, im2col の窓を作って重みと内積）
+function im2col(x, H, W, C, k) { const oh = H - k + 1, ow = W - k + 1, K = C * k * k, col = new Float32Array(oh * ow * K);
+  for (let oy = 0; oy < oh; oy++) for (let ox = 0; ox < ow; ox++) { const p = (oy * ow + ox) * K;
+    for (let c = 0; c < C; c++) for (let ky = 0; ky < k; ky++) for (let kx = 0; kx < k; kx++) col[p + (c * k + ky) * k + kx] = x[((oy + ky) * W + ox + kx) * C + c]; }
+  return col; }
+function pool(x, H, W, C) { const oh = H >> 1, ow = W >> 1, o = new Float32Array(oh * ow * C), idx = new Int32Array(oh * ow * C);
+  for (let y = 0; y < oh; y++) for (let xx = 0; xx < ow; xx++) for (let c = 0; c < C; c++) { let best = -1e30, bi = 0;
+    for (let dy = 0; dy < 2; dy++) for (let dx = 0; dx < 2; dx++) { const i = ((2 * y + dy) * W + 2 * xx + dx) * C + c; if (x[i] > best) { best = x[i]; bi = i; } }
+    const j = (y * ow + xx) * C + c; o[j] = best; idx[j] = bi; }
+  return [o, idx]; }
+function jsCnnForward1(P, x) {
+  const col1 = im2col(x, 28, 28, 1, 5), u1 = mmT(col1, P[0], 576, 20, 25, P[1], new Float32Array(576 * 20)), z1 = u1.map((v) => (v > 0 ? v : 0));
+  const [p1, i1] = pool(z1, 24, 24, 20);
+  const col2 = im2col(p1, 12, 12, 20, 5), u2 = mmT(col2, P[2], 64, 50, 500, P[3], new Float32Array(64 * 50)), z2 = u2.map((v) => (v > 0 ? v : 0));
+  const [p2, i2] = pool(z2, 8, 8, 50);
+  const u3 = mmT(p2, P[4], 1, 500, 800, P[5], new Float32Array(500)), z3 = u3.map((v) => (v > 0 ? v : 0));
+  const y = mmT(z3, P[6], 1, 10, 500, P[7], new Float32Array(10)); softmaxRows(y, 1, 10);
+  return { col1, u1, i1, col2, u2, p1, p2, i2, u3, z3, y };
+}
+function jsCnnTrainBatch(P, X, Y, n, lr) {
+  const G = P.map((p) => new Float32Array(p.length));
+  for (let r = 0; r < n; r++) {
+    const f = jsCnnForward1(P, X.subarray(r * 784, (r + 1) * 784));
+    const d4 = f.y.slice(); d4[Y[r]] -= 1;
+    // fc10
+    for (let i = 0; i < 10; i++) { G[7][i] += d4[i]; for (let j = 0; j < 500; j++) G[6][i * 500 + j] += d4[i] * f.z3[j]; }
+    const d3 = new Float32Array(500); for (let i = 0; i < 10; i++) for (let j = 0; j < 500; j++) d3[j] += d4[i] * P[6][i * 500 + j];
+    for (let j = 0; j < 500; j++) if (f.u3[j] < 0) d3[j] = 0;
+    // fc500
+    const dp2 = new Float32Array(800);
+    for (let i = 0; i < 500; i++) { const g = d3[i]; if (g === 0) continue; G[5][i] += g; for (let j = 0; j < 800; j++) { G[4][i * 800 + j] += g * f.p2[j]; dp2[j] += g * P[4][i * 800 + j]; } }
+    // pool2 → relu → conv2
+    const du2 = new Float32Array(64 * 50); for (let j = 0; j < 800; j++) du2[f.i2[j]] = dp2[j];
+    for (let k = 0; k < du2.length; k++) if (f.u2[k] < 0) du2[k] = 0;
+    const dcol2 = new Float32Array(64 * 500);
+    for (let p = 0; p < 64; p++) for (let co = 0; co < 50; co++) { const g = du2[p * 50 + co]; if (g === 0) continue; G[3][co] += g;
+      for (let q = 0; q < 500; q++) { G[2][co * 500 + q] += g * f.col2[p * 500 + q]; dcol2[p * 500 + q] += g * P[2][co * 500 + q]; } }
+    const dp1 = new Float32Array(12 * 12 * 20); // col2im
+    for (let oy = 0; oy < 8; oy++) for (let ox = 0; ox < 8; ox++) { const p = (oy * 8 + ox) * 500;
+      for (let c = 0; c < 20; c++) for (let ky = 0; ky < 5; ky++) for (let kx = 0; kx < 5; kx++) dp1[((oy + ky) * 12 + ox + kx) * 20 + c] += dcol2[p + (c * 5 + ky) * 5 + kx]; }
+    // pool1 → relu → conv1
+    const du1 = new Float32Array(576 * 20); for (let j = 0; j < dp1.length; j++) du1[f.i1[j]] = dp1[j];
+    for (let k = 0; k < du1.length; k++) if (f.u1[k] < 0) du1[k] = 0;
+    for (let p = 0; p < 576; p++) for (let co = 0; co < 20; co++) { const g = du1[p * 20 + co]; if (g === 0) continue; G[1][co] += g; for (let q = 0; q < 25; q++) G[0][co * 25 + q] += g * f.col1[p * 25 + q]; }
+  }
+  for (let k = 0; k < P.length; k++) { const p = P[k], g = G[k]; for (let i = 0; i < p.length; i++) p[i] -= lr * g[i]; }
+}
+
+// ---------- TensorFlow.js ----------
+function tfParams(kind, P) {
+  if (kind === "mlp") return [0, 2, 4].map((i) => [tf.variable(tf.tensor2d(P[i], [P[i + 1].length, P[i].length / P[i + 1].length]).transpose()), tf.variable(tf.tensor1d(P[i + 1]))]);
+  // conv の重み (co, c·k·k) → [ky, kx, c, co]
+  const conv = (W, co, c) => tf.tensor4d(W, [co, c, 5, 5]).transpose([2, 3, 1, 0]);
+  return [[tf.variable(conv(P[0], 20, 1)), tf.variable(tf.tensor1d(P[1]))], [tf.variable(conv(P[2], 50, 20)), tf.variable(tf.tensor1d(P[3]))],
+    [tf.variable(tf.tensor2d(P[4], [500, 800]).transpose()), tf.variable(tf.tensor1d(P[5]))], [tf.variable(tf.tensor2d(P[6], [10, 500]).transpose()), tf.variable(tf.tensor1d(P[7]))]];
+}
+function tfLogits(kind, V, x) {
+  if (kind === "mlp") { let h = tf.relu(tf.add(tf.matMul(x, V[0][0]), V[0][1])); h = tf.relu(tf.add(tf.matMul(h, V[1][0]), V[1][1])); return tf.add(tf.matMul(h, V[2][0]), V[2][1]); }
+  const n = x.shape[0]; let h = tf.reshape(x, [n, 28, 28, 1]);
+  h = tf.maxPool(tf.relu(tf.add(tf.conv2d(h, V[0][0], 1, "valid"), V[0][1])), 2, 2, "valid");
+  h = tf.maxPool(tf.relu(tf.add(tf.conv2d(h, V[1][0], 1, "valid"), V[1][1])), 2, 2, "valid");
+  h = tf.reshape(h, [n, 800]); h = tf.relu(tf.add(tf.matMul(h, V[2][0]), V[2][1])); return tf.add(tf.matMul(h, V[3][0]), V[3][1]);
+}
+function disposeV(V) { V.flat().forEach((t) => t.dispose()); }
+
+// ---------- 計測 ----------
+function addResult(r) {
+  results.push(r);
+  const tb = $("resbody"); if (results.length === 1) tb.textContent = "";
+  const tr = document.createElement("tr");
+  const t = document.createElement("td"); t.className = "task";
+  const head = document.createElement("strong"); head.textContent = `${SHORT[r.method] || r.method}　${r.task}`; t.append(head);
+  const sub = document.createElement("small");
+  let extra = "";
+  if (r.acc != null) extra = `　正解 ${(r.acc * 100).toFixed(2)}%${r.accOk ? "" : "（要確認）"}`;
+  else if (r.loss != null) extra = `　損失 ${r.loss.toFixed(3)}`;
+  sub.textContent = `${r.n.toLocaleString()} 枚 ${fmtS(r.sec)}${extra}`; t.append(sub); tr.append(t);
+  [fmtMs(r.sec / r.n * 1000), r.task.includes("1 枚ずつ") ? "—" : fmtS(r.sec / r.n * 60000)].forEach((c) => { const td = document.createElement("td"); td.textContent = c; td.className = "num"; tr.append(td); });
+  tb.append(tr);
+  renderCompare();
+}
+function accOf(probArr, Y, n) { let ok = 0; for (let r = 0; r < n; r++) { let b = 0; for (let j = 1; j < 10; j++) if (probArr[r * 10 + j] > probArr[r * 10 + b]) b = j; if (b === Y[r]) ok++; } return ok / n; }
+const EXPECT = { mlp: 0.9824, cnn: 0.9917 }; // 10,000 枚での正解率（EusLisp・PyTorch と同じ重み）
+
+async function benchJS(cfg, step) {
+  const M = "JavaScript（自作）";
+  for (const kind of ["mlp", "cnn"]) {
+    const n = cfg.jsInfer; setStatus(`${M}: ${kind.toUpperCase()} の推論 ${n} 枚`); await sleep0();
+    const P = DATA[kind]; const out = new Float32Array(n * 10); const t0 = now();
+    for (let s = 0; s < n; s += 100) {
+      if (kind === "mlp") out.set(jsMlpForward(P, DATA.testX.subarray(s * 784, (s + 100) * 784), 100), s * 10);
+      else for (let r = s; r < s + 100; r++) out.set(jsCnnForward1(P, DATA.testX.subarray(r * 784, (r + 1) * 784)).y, r * 10);
+      if (now() - t0 > 50) await sleep0();
+    }
+    const sec = (now() - t0) / 1000; const acc = accOf(out, DATA.testY, n);
+    addResult({ method: M, kind, task: `${kind.toUpperCase()} 推論`, n, sec, acc, accOk: acc > 0.97 }); step();
+  }
+  for (const kind of ["mlp", "cnn"]) {
+    const n = cfg.jsTrain, B = 200; setStatus(`${M}: ${kind.toUpperCase()} の学習 ${n} 枚`); await sleep0();
+    const P = randInit(kind === "mlp" ? MLP_SH : CNN_SH, 7); const t0 = now();
+    for (let s = 0; s < n; s += B) {
+      const X = DATA.trainX.subarray(s * 784, (s + B) * 784), Y = DATA.trainY.subarray(s, s + B);
+      (kind === "mlp" ? jsMlpTrainBatch : jsCnnTrainBatch)(P, X, Y, B, 0.001); await sleep0();
+    }
+    const sec = (now() - t0) / 1000;
+    addResult({ method: M, kind, task: `${kind.toUpperCase()} 学習`, n, sec }); step();
+  }
+}
+
+async function benchTF(backend, cfg, step) {
+  const names = { cpu: "TensorFlow.js CPU（JS）", wasm: "TensorFlow.js WASM", webgl: "TensorFlow.js WebGL（GPU）", webgpu: "TensorFlow.js WebGPU（GPU）" };
+  const M = names[backend];
+  let ok = false; try { ok = await tf.setBackend(backend); await tf.ready(); } catch (e) { ok = false; }
+  if (!ok || tf.getBackend() !== backend) { addSkip(M, "この端末では使えません"); step(4); return; }
+  const small = backend === "cpu";
+  for (const kind of ["mlp", "cnn"]) { try {
+    const n = small ? cfg.tfCpuInfer : 10000, B = 1000;
+    setStatus(`${M}: ${kind.toUpperCase()} の推論 ${n.toLocaleString()} 枚`); await sleep0();
+    const V = tfParams(kind, DATA[kind]);
+    // 準備運転（シェーダのコンパイルなど）
+    { const w = tf.tidy(() => tfLogits(kind, V, tf.tensor2d(DATA.testX.subarray(0, 100 * 784), [100, 784]))); await w.data(); w.dispose(); }
+    const out = new Float32Array(n * 10); const t0 = now();
+    for (let s = 0; s < n; s += B) {
+      const b = Math.min(B, n - s);
+      const p = tf.tidy(() => tf.softmax(tfLogits(kind, V, tf.tensor2d(DATA.testX.subarray(s * 784, (s + b) * 784), [b, 784]))));
+      out.set(await p.data(), s * 10); p.dispose();
+    }
+    const sec = (now() - t0) / 1000; const acc = accOf(out, DATA.testY, n);
+    addResult({ method: M, kind, task: `${kind.toUpperCase()} 推論`, n, sec, acc, accOk: n === 10000 ? Math.abs(acc - EXPECT[kind]) < 0.0015 : acc > 0.97 });
+    // 1 枚ずつの応答時間
+    const lat = []; const one = tf.tensor2d(DATA.testX.subarray(0, 784), [1, 784]);
+    for (let i = 0; i < 20; i++) { const a = now(); const p = tf.tidy(() => tfLogits(kind, V, one)); await p.data(); p.dispose(); lat.push(now() - a); }
+    one.dispose(); lat.sort((a, b) => a - b);
+    addResult({ method: M, kind, task: `${kind.toUpperCase()} 推論 1 枚ずつ`, n: 1, sec: lat[10] / 1000 });
+    disposeV(V);
+  } catch (e) { addSkip(`${M}`, `${kind.toUpperCase()} 推論: この方法では動きません（${e && e.message ? e.message : e}）`); } step();
+  }
+  for (const kind of ["mlp", "cnn"]) { try {
+    const n = small ? (kind === "cnn" ? 200 : cfg.tfCpuTrain) : cfg.tfTrain, B = 200;
+    setStatus(`${M}: ${kind.toUpperCase()} の学習 ${n.toLocaleString()} 枚`); await sleep0();
+    const V = tfParams(kind, randInit(kind === "mlp" ? MLP_SH : CNN_SH, 7)); const vars = V.flat();
+    const opt = tf.train.sgd(0.001);
+    const step1 = (s) => {
+      const loss = opt.minimize(() => tf.tidy(() => {
+        const x = tf.tensor2d(DATA.trainX.subarray(s * 784, (s + B) * 784), [B, 784]);
+        const t = tf.oneHot(tf.tensor1d(DATA.trainY.subarray(s, s + B), "int32"), 10);
+        return tf.losses.softmaxCrossEntropy(t, tfLogits(kind, V, x), undefined, 0, tf.Reduction.SUM); // 損失はバッチの和（nn.l と同じ）
+      }), true, vars);
+      return loss;
+    };
+    { const w = step1(0); await w.data(); w.dispose(); } // 準備運転（1 バッチ）
+    const t0 = now(); let last = null;
+    for (let s = 0; s < n; s += B) { if (last) last.dispose(); last = step1(s % 6000); if ((s / B) % 5 === 4) await last.data(); }
+    const lv = (await last.data())[0] / B; last.dispose();
+    const sec = (now() - t0) / 1000;
+    addResult({ method: M, kind, task: `${kind.toUpperCase()} 学習`, n, sec, loss: lv });
+    opt.dispose(); disposeV(V);
+  } catch (e) { addSkip(`${M}`, `${kind.toUpperCase()} 学習: この方法では動きません（${e && e.message ? e.message : e}）`); } step();
+  }
+}
+function addSkip(method, why) {
+  results.push({ method, skipped: why });
+  const tb = $("resbody"); if (results.length === 1) tb.textContent = "";
+  const tr = document.createElement("tr"); const a = document.createElement("td"); a.colSpan = 3; a.className = "task"; const h = document.createElement("strong"); h.textContent = SHORT[method] || method; const n = document.createElement("small"); n.textContent = why; a.append(h, n); tr.append(a); tb.append(tr);
+}
+
+function bestOf(task) {
+  let best = null;
+  for (const r of results) if (!r.skipped && r.task === task && (!best || r.sec / r.n < best.sec / best.n)) best = r;
+  return best;
+}
+function renderCompare() {
+  const tb = $("cmpbody"); tb.textContent = "";
+  const row = (name, a, b, mine) => { const tr = document.createElement("tr"); [name, a, b].forEach((c, i) => { const td = document.createElement("td"); td.textContent = c; td.className = i ? "num" : "wrap"; if (mine) td.classList.add("hl"); tr.append(td); }); tb.append(tr); };
+  for (const [n, a, b] of REF) row(n, a == null ? "—" : fmtS(a), b == null ? "—" : fmtS(b));
+  const m = bestOf("MLP 学習"), c = bestOf("CNN 学習");
+  if (m || c) row(`この端末: ${SHORT[m ? m.method : c.method]}`, m ? fmtS(m.sec / m.n * 60000) : "—", c ? fmtS(c.sec / c.n * 60000) : "—", true);
+}
+
+let db = null, me = null;
+async function saveRun() {
+  if (!db) { setStatus("計測が終わりました（この表示では保存できません。結果は上の表をご覧ください）"); return; }
+  const id = new Date().toISOString().replace(/[-:.TZ]/g, "") + "-" + Math.random().toString(36).slice(2, 6);
+  const doc = { when: new Date().toISOString(), device: $("device-name").value.trim(), info, mode: $("mode").value,
+    results: results.filter((r) => !r.skipped).map((r) => ({ method: r.method, task: r.task, n: r.n, sec: r.sec, acc: r.acc ?? null, loss: r.loss ?? null })),
+    skipped: results.filter((r) => r.skipped).map((r) => r.method) };
+  try { await db.collection("runs").doc(id).set(doc); setStatus("計測が終わり、結果を保存しました"); }
+  catch (e) { setStatus("計測は終わりましたが、保存できませんでした（" + (e && e.code ? e.code : "エラー") + "）"); }
+}
+function renderSaved(docs) {
+  const tb = $("savedbody"); tb.textContent = "";
+  if (!docs.length) { const tr = document.createElement("tr"); const td = document.createElement("td"); td.colSpan = 6; td.className = "note"; td.textContent = "まだ保存された計測はありません。計測が終わると自動でここに加わります。"; tr.append(td); tb.append(tr); return; }
+  for (const d of docs) {
+    const R = d.results || []; const best = (task) => R.filter((r) => r.task === task).sort((a, b) => a.sec / a.n - b.sec / b.n)[0];
+    const m = best("MLP 学習"), c = best("CNN 学習"), ci = best("CNN 推論");
+    const cells = [new Date(d.when).toLocaleString("ja-JP"), d.device || (d.info && d.info.ua ? d.info.ua.slice(0, 40) + "…" : "不明"), m ? (SHORT[m.method] || m.method) : "—", m ? fmtS(m.sec / m.n * 60000) : "—", c ? fmtS(c.sec / c.n * 60000) : "—", ci ? fmtS(ci.sec / ci.n * 10000) : "—"];
+    const tr = document.createElement("tr"); cells.forEach((v, i) => { const td = document.createElement("td"); td.textContent = v; if (i >= 3) td.className = "num"; tr.append(td); }); tb.append(tr);
+  }
+}
+
+async function runAll() {
+  const btn = $("run"); btn.disabled = true; results.length = 0; $("resbody").textContent = "";
+  lsSet("devname", $("device-name").value);
+  let wake = null; try { wake = await navigator.wakeLock.request("screen"); } catch (e) {}
+  const q = $("mode").value === "quick";
+  const cfg = q ? { jsInfer: 200, jsTrain: 200, tfCpuInfer: 400, tfCpuTrain: 200, tfTrain: 2000 } : { jsInfer: 1000, jsTrain: 600, tfCpuInfer: 1000, tfCpuTrain: 400, tfTrain: 6000 };
+  const total = 4 + 4 * 4; let done = 0; const step = (k = 1) => { done += k; setProg(done / total); };
+  setProg(0);
+  try {
+    await benchJS(cfg, step);
+    for (const be of ["wasm", "webgl", "webgpu", "cpu"]) await benchTF(be, cfg, step);
+    setProg(1);
+    await saveRun();
+  } catch (e) { setStatus("計測中に問題が起きました: " + (e && e.message ? e.message : e)); console.error(e); }
+  try { wake && wake.release(); } catch (e) {}
+  btn.disabled = false;
+  window.__benchDone = { info, results };
+  try { console.log("BENCHDONE " + JSON.stringify({ info, results })); } catch (e) {}
+}
+
+(async () => {
+  const dn = lsGet("devname"); if (dn) $("device-name").value = dn;
+  renderCompare();
+  $("run").addEventListener("click", runAll);
+  $("run").disabled = true;
+  try { if (tf.wasm) tf.wasm.setWasmPaths(new URL("tfjs/", location.href).href); } catch (e) {}
+  await deviceInfo();
+  try { DATA = await loadAll(); setStatus("準備ができました。端末名を入れて「計測を始める」を押してください"); $("run").disabled = false; }
+  catch (e) { setStatus("データを読み込めませんでした: " + (e && e.message ? e.message : e)); }
+  if (window.claude) {
+    db = await claude.use("db");
+    if (db) db.collection("runs").orderBy("when", "desc").limit(30).onSnapshot((snap) => renderSaved(snap.docs.map((d) => d.data())), () => {});
+  }
+  if (location.hash === "#autorun") runAll();
+})();
+</script>
+
+</body></html>

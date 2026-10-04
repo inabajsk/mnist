@@ -1,0 +1,196 @@
+;; .eusrc executed!! *rcb4eus-dir*=/home/mi/kxreus added, *load-path* updated!!
+(test-mnist-train)
+;;(test-mnist-batch 200) ;; train from train-images
+;;(test-mnist-test) ;; test test-images
+;;(test-mnist-train) ;; test train-images
+;; (test-mnist-batch-cuda 200)        ;; train on GPU (FP64)
+;; (test-mnist-batch-cuda 200 :precision 32)
+;; (test-mnist-batch-lisp 200 :dgemm :cuda)
+;; (test-mnist-cuda-test)             ;; test mlp/mnist-mlp-19.l on GPU
+;; (bench-mnist-cuda)
+Loading datasets ... mnist-datasets.l
+Loaded datasets ...
+RESULT gpu "NVIDIA GB10 (sm_121, 48 SMs)"
+RESULT dgemm cblas 200x784x1000    2.829 ms
+RESULT dgemm a-defforeign 200x784x1000    0.921 ms
+RESULT dgemm b-module 200x784x1000    0.940 ms
+RESULT dgemm c-direct 200x784x1000    0.953 ms
+RESULT dgemm d-ipc 200x784x1000   12.211 ms
+RESULT dgemm cblas 200x1000x1000    2.971 ms
+RESULT dgemm a-defforeign 200x1000x1000    1.145 ms
+RESULT dgemm b-module 200x1000x1000    1.174 ms
+RESULT dgemm c-direct 200x1000x1000    1.196 ms
+RESULT dgemm d-ipc 200x1000x1000   18.310 ms
+RESULT dgemm cblas 1000x200x1000    5.952 ms
+RESULT dgemm a-defforeign 1000x200x1000    1.399 ms
+RESULT dgemm b-module 1000x200x1000    1.417 ms
+RESULT dgemm c-direct 1000x200x1000    1.412 ms
+RESULT dgemm d-ipc 1000x200x1000   28.208 ms
+(in:   784    out:  1000)
+(in:  1000    out:  1000)
+(in:  1000    out:    10)
+
+nn.l loop, dgemm=:cpu, batch=200
+ epoch  1  loss ave.:   0.3428    30.452 [sec wall]
+RESULT lisp-loop cblas   30.452 s
+(in:   784    out:  1000)
+(in:  1000    out:  1000)
+(in:  1000    out:    10)
+
+nn.l loop, dgemm=:cuda, batch=200
+ epoch  1  loss ave.:   0.3428    24.752 [sec wall]
+RESULT lisp-loop a-defforeign   24.752 s
+(in:   784    out:  1000)
+(in:  1000    out:  1000)
+(in:  1000    out:    10)
+
+nn.l loop, dgemm=cudaprod-dgemm, batch=200
+ epoch  1  loss ave.:   0.3428    24.658 [sec wall]
+RESULT lisp-loop b-module   24.658 s
+(in:   784    out:  1000)
+(in:  1000    out:  1000)
+(in:  1000    out:    10)
+
+nn.l loop, dgemm=direct-cuda-dgemm, batch=200
+ epoch  1  loss ave.:   0.3428    24.696 [sec wall]
+RESULT lisp-loop c-direct   24.696 s
+(in:   784    out:  1000)
+(in:  1000    out:  1000)
+(in:  1000    out:    10)
+
+nn.l loop, dgemm=ipc-dgemm, batch=200
+ epoch  1  loss ave.:   0.3428    69.376 [sec wall]
+RESULT lisp-loop d-ipc   69.376 s
+(in:   784    out:  1000)
+(in:  1000    out:  1000)
+(in:  1000    out:    10)
+
+RESULT resident c-openblas fp64  28.3038 s
+(in:   784    out:  1000)
+(in:  1000    out:  1000)
+(in:  1000    out:    10)
+
+RESULT resident A-defforeign-epoch fp64   1.6115 s
+(in:   784    out:  1000)
+(in:  1000    out:  1000)
+(in:  1000    out:    10)
+
+RESULT resident A-defforeign-batchloop fp64   1.5645 s
+(in:   784    out:  1000)
+(in:  1000    out:  1000)
+(in:  1000    out:    10)
+
+RESULT resident B-module-epoch fp64   1.5630 s
+(in:   784    out:  1000)
+(in:  1000    out:  1000)
+(in:  1000    out:    10)
+
+RESULT resident D-ipc-torch fp64   1.5559 s
+(in:   784    out:  1000)
+(in:  1000    out:  1000)
+(in:  1000    out:    10)
+
+RESULT resident A-defforeign-epoch fp32   0.1183 s
+(in:   784    out:  1000)
+(in:  1000    out:  1000)
+(in:  1000    out:    10)
+
+RESULT resident A-defforeign-batchloop fp32   0.1582 s
+(in:   784    out:  1000)
+(in:  1000    out:  1000)
+(in:  1000    out:    10)
+
+RESULT resident B-module-epoch fp32   0.1272 s
+(in:   784    out:  1000)
+(in:  1000    out:  1000)
+(in:  1000    out:    10)
+
+RESULT resident D-ipc-torch fp32   0.2719 s
+(in:   784    out:  1000)
+(in:  1000    out:  1000)
+(in:  1000    out:    10)
+
+RESULT sweep 50 c-openblas  16.0993
+(in:   784    out:  1000)
+(in:  1000    out:  1000)
+(in:  1000    out:    10)
+
+RESULT sweep 50 gpu-fp64   1.8949
+(in:   784    out:  1000)
+(in:  1000    out:  1000)
+(in:  1000    out:    10)
+
+RESULT sweep 50 gpu-fp32   0.2103
+(in:   784    out:  1000)
+(in:  1000    out:  1000)
+(in:  1000    out:    10)
+
+RESULT sweep 100 c-openblas  10.4333
+(in:   784    out:  1000)
+(in:  1000    out:  1000)
+(in:  1000    out:    10)
+
+RESULT sweep 100 gpu-fp64   1.6528
+(in:   784    out:  1000)
+(in:  1000    out:  1000)
+(in:  1000    out:    10)
+
+RESULT sweep 100 gpu-fp32   0.1378
+(in:   784    out:  1000)
+(in:  1000    out:  1000)
+(in:  1000    out:    10)
+
+RESULT sweep 200 c-openblas   8.8346
+(in:   784    out:  1000)
+(in:  1000    out:  1000)
+(in:  1000    out:    10)
+
+RESULT sweep 200 gpu-fp64   1.4894
+(in:   784    out:  1000)
+(in:  1000    out:  1000)
+(in:  1000    out:    10)
+
+RESULT sweep 200 gpu-fp32   0.0955
+(in:   784    out:  1000)
+(in:  1000    out:  1000)
+(in:  1000    out:    10)
+
+RESULT sweep 500 c-openblas   6.6588
+(in:   784    out:  1000)
+(in:  1000    out:  1000)
+(in:  1000    out:    10)
+
+RESULT sweep 500 gpu-fp64   1.6306
+(in:   784    out:  1000)
+(in:  1000    out:  1000)
+(in:  1000    out:    10)
+
+RESULT sweep 500 gpu-fp32   0.0656
+(in:   784    out:  1000)
+(in:  1000    out:  1000)
+(in:  1000    out:    10)
+
+RESULT sweep 1000 c-openblas   7.3663
+(in:   784    out:  1000)
+(in:  1000    out:  1000)
+(in:  1000    out:    10)
+
+RESULT sweep 1000 gpu-fp64   1.5301
+(in:   784    out:  1000)
+(in:  1000    out:  1000)
+(in:  1000    out:    10)
+
+RESULT sweep 1000 gpu-fp32   0.0571
+(in:   784    out:  1000)
+(in:  1000    out:  1000)
+(in:  1000    out:    10)
+
+RESULT setup A-defforeign    3.368 s
+(in:   784    out:  1000)
+(in:  1000    out:  1000)
+(in:  1000    out:    10)
+
+RESULT setup D-ipc    4.938 s
+free(): invalid pointer
+timeout: 監視しているコマンドがコアダンプしました
+DONE

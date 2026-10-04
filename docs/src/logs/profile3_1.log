@@ -1,0 +1,31 @@
+;; .eusrc executed!! *rcb4eus-dir*=/home/mi/kxreus added, *load-path* updated!!
+(test-mnist-train)
+;;(test-mnist-batch 200) ;; train from train-images
+;;(test-mnist-test) ;; test test-images
+;;(test-mnist-train) ;; test train-images
+TIME load-nn.l wall      0.008 s
+TIME load-datasets wall     18.533 s cpu     18.510 s
+DATA 60000 60000 10000 10000
+(in:   784    out:  1000)
+(in:  1000    out:  1000)
+(in:  1000    out:    10)
+
+THREADS 1 wall_per_60000     35.960 s cpu_per_60000     35.900 s
+PROF bs200-6000img
+PROF :fwd-softmax      1.839
+PROF :bp-output-delta      0.409
+PROF :bp-alloc     39.803
+PROF :up-w-daxpy     29.411
+PROF :up-b      0.765
+PROF :up-alloc    428.650
+PROF :up-db-dgemm     10.854
+PROF :up-dw-dgemm    937.981
+PROF :fwd-extended-matrix     60.698
+PROF :fwd-relu    135.317
+PROF :up-transpose-delta     32.365
+PROF :up-wt-transpose    181.586
+PROF :loss      9.687
+PROF :bp-relu-diff-mprod    162.553
+PROF :fwd-dgemm    921.724
+PROF :bp-dgemm    520.154
+PROF :batch-make    145.578

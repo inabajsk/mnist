@@ -1,0 +1,59 @@
+;; .eusrc executed!! *rcb4eus-dir*=/home/mi/kxreus added, *load-path* updated!!
+(test-mnist-train)
+;;(test-mnist-batch 200) ;; train from train-images
+;;(test-mnist-test) ;; test test-images
+;;(test-mnist-train) ;; test train-images
+;; (test-mnist-batch-cuda 200)        ;; train on GPU (FP64)
+;; (test-mnist-batch-cuda 200 :precision 32)
+;; (test-mnist-batch-lisp 200 :dgemm :cuda)
+;; (test-mnist-cuda-test)             ;; test mlp/mnist-mlp-19.l on GPU
+;; (bench-mnist-cuda)
+Loading datasets ... mnist-datasets.l
+Loaded datasets ...
+(in:   784    out:  1000)
+(in:  1000    out:  1000)
+(in:  1000    out:    10)
+
+W0[0..3] #f(-0.070503 -0.022474 0.042983 -0.040958)
+(in:   784    out:  1000)
+(in:  1000    out:  1000)
+(in:  1000    out:    10)
+
+nn.l loop, dgemm=:cpu, batch=200
+ epoch  1  loss ave.:   0.3428    28.103 [sec wall]
+(in:   784    out:  1000)
+(in:  1000    out:  1000)
+(in:  1000    out:    10)
+
+engine=:cpu precision=64 batch=200 lr=0.001
+ upload (weights + datasets):    1.331 [sec]
+ epoch  1  loss ave.:   0.3418     6.353 [sec wall]
+norm(W_lisp - W_c) after 1 epoch: 1.03274
+(in:   784    out:  1000)
+(in:  1000    out:  1000)
+(in:  1000    out:    10)
+
+GPU: NVIDIA GB10 (sm_121, 48 SMs)
+engine=:cuda precision=64 batch=200 lr=0.001
+ upload (weights + datasets):    1.568 [sec]
+ epoch  1  loss ave.:   0.3418     1.813 [sec wall]   test: 9470/10000 (94.70%)
+ epoch  2  loss ave.:   0.1455     1.441 [sec wall]   test: 9617/10000 (96.17%)
+ epoch  3  loss ave.:   0.1022     1.438 [sec wall]   test: 9676/10000 (96.76%)
+ epoch  4  loss ave.:   0.0776     1.473 [sec wall]   test: 9724/10000 (97.24%)
+ epoch  5  loss ave.:   0.0608     1.441 [sec wall]   test: 9747/10000 (97.47%)
+ epoch  6  loss ave.:   0.0485     1.440 [sec wall]   test: 9766/10000 (97.66%)
+ epoch  7  loss ave.:   0.0390     1.434 [sec wall]   test: 9770/10000 (97.70%)
+ epoch  8  loss ave.:   0.0317     1.450 [sec wall]   test: 9785/10000 (97.85%)
+ epoch  9  loss ave.:   0.0257     1.441 [sec wall]   test: 9791/10000 (97.91%)
+ epoch 10  loss ave.:   0.0210     1.431 [sec wall]   test: 9793/10000 (97.93%)
+ epoch 11  loss ave.:   0.0172     1.438 [sec wall]   test: 9797/10000 (97.97%)
+ epoch 12  loss ave.:   0.0142     1.445 [sec wall]   test: 9802/10000 (98.02%)
+ epoch 13  loss ave.:   0.0118     1.450 [sec wall]   test: 9806/10000 (98.06%)
+ epoch 14  loss ave.:   0.0099     1.461 [sec wall]   test: 9813/10000 (98.13%)
+ epoch 15  loss ave.:   0.0084     1.439 [sec wall]   test: 9813/10000 (98.13%)
+ epoch 16  loss ave.:   0.0072     1.466 [sec wall]   test: 9818/10000 (98.18%)
+ epoch 17  loss ave.:   0.0062     1.456 [sec wall]   test: 9819/10000 (98.19%)
+ epoch 18  loss ave.:   0.0054     1.461 [sec wall]   test: 9821/10000 (98.21%)
+ epoch 19  loss ave.:   0.0048     1.463 [sec wall]   test: 9820/10000 (98.20%)
+ epoch 20  loss ave.:   0.0043     1.442 [sec wall]   test: 9822/10000 (98.22%)
+GPULOG ((1 0.341765 1.81339 9470) (2 0.145502 1.44052 9617) (3 0.102242 1.43758 9676) (4 0.077604 1.4726 9724) (5 0.060821 1.44098 9747) (6 0.048497 1.43966 9766) (7 0.03904 1.43424 9770) (8 0.031654 1.45037 9785) (9 0.025683 1.44073 9791) (10 0.020954 1.43079 9793) (11 0.017201 1.43786 9797) (12 0.014209 1.44531 9802) (13 0.01183 1.4498 9806) (14 0.009945 1.46103 9813) (15 0.008431 1.43926 9813) (16 0.007211 1.46552 9818) (17 0.006238 1.45599 9819) (18 0.00545 1.46066 9821) (19 0.004804 1.46309 9820) (20 0.004267 1.4422 9822))

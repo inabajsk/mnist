@@ -1,0 +1,45 @@
+;; .eusrc executed!! *rcb4eus-dir*=/home/mi/kxreus added, *load-path* updated!!
+(test-mnist-train)
+;;(test-mnist-batch 200) ;; train from train-images
+;;(test-mnist-test) ;; test test-images
+;;(test-mnist-train) ;; test train-images
+TIME load-nn.l wall      0.010 s
+TIME load-datasets wall     22.559 s cpu     23.680 s
+DATA 60000 60000 10000 10000
+;; #<load-module #Xad67234b1bc8 "././MATPROD/LinuxARM/libmatprod.so"> is unloaded.
+(in:   784    out:  1000)
+(in:  1000    out:  1000)
+(in:  1000    out:    10)
+
+SWEEP2 bs 10 wall_per_60000    179.812 s cpu_per_60000   3453.800 s batchmake_per_60000      1.718 s
+(in:   784    out:  1000)
+(in:  1000    out:  1000)
+(in:  1000    out:    10)
+
+SWEEP2 bs 50 wall_per_60000     51.518 s cpu_per_60000    940.400 s batchmake_per_60000      1.533 s
+(in:   784    out:  1000)
+(in:  1000    out:  1000)
+(in:  1000    out:    10)
+
+SWEEP2 bs 100 wall_per_60000     26.347 s cpu_per_60000    493.100 s batchmake_per_60000      1.491 s
+(in:   784    out:  1000)
+(in:  1000    out:  1000)
+(in:  1000    out:    10)
+
+SWEEP2 bs 200 wall_per_60000     21.323 s cpu_per_60000    399.400 s batchmake_per_60000      1.626 s
+(in:   784    out:  1000)
+(in:  1000    out:  1000)
+(in:  1000    out:    10)
+
+SWEEP2 bs 500 wall_per_60000     17.487 s cpu_per_60000    312.200 s batchmake_per_60000      1.458 s
+(in:   784    out:  1000)
+(in:  1000    out:  1000)
+(in:  1000    out:    10)
+
+SWEEP2 bs 1000 wall_per_60000     19.564 s cpu_per_60000    331.400 s batchmake_per_60000      1.923 s
+TIME load-mlp-19 wall      9.833 s
+TIME infer-test-1by1 wall     10.309 s  correct 9824 / 10000
+TIME infer-test-1by1-dolist wall     11.578 s  correct 9824
+TIME infer-test-batch10000 (1.04058 9824)
+TIME infer-train-batch60000 (5.03062 59981)
+TIME dump-model wall     59.902 s

@@ -1,0 +1,123 @@
+;; .eusrc executed!! *rcb4eus-dir*=/home/mi/kxreus added, *load-path* updated!!
+(test-mnist-train)
+;;(test-mnist-batch 200) ;; train from train-images
+;;(test-mnist-test) ;; test test-images
+;;(test-mnist-train) ;; test train-images
+;; (test-mnist-batch-cuda 200)        ;; train on GPU (FP64)
+;; (test-mnist-batch-cuda 200 :precision 32)
+;; (test-mnist-batch-lisp 200 :dgemm :cuda)
+;; (test-mnist-cuda-test)             ;; test mlp/mnist-mlp-19.l on GPU
+;; (bench-mnist-cuda)
+Loading datasets ... mnist-datasets.l
+Loaded datasets ...
+RESULT gpu "NVIDIA GB10 (sm_121, 48 SMs)"
+RESULT net ((:fc 1000) (:relu) (:fc 1000) (:relu) (:fc 10)) params 1796010 flops 3588000
+RESULT net ((:conv 5 6) (:relu) (:pool) (:conv 5 16) (:relu) (:pool) (:fc 120) (:relu) (:fc 84) (:relu) (:fc 10)) params 44426 flops 563280
+RESULT net ((:conv 5 20) (:relu) (:pool) (:conv 5 50) (:relu) (:pool) (:fc 500) (:relu) (:fc 10)) params 431080 flops 4586000
+(in:   784    out:  1000)
+(in:  1000    out:  1000)
+(in:  1000    out:    10)
+
+net=((:fc 1000) (:relu) (:fc 1000) (:relu) (:fc 10))
+ params=1796010 device=:gpu precision=32 batch=200 lr=0.001
+ epoch  1  loss ave.:   0.3417     0.452 [sec wall]   test: 9473/10000 (94.73%)
+ epoch  2  loss ave.:   0.1455     0.099 [sec wall]   test: 9615/10000 (96.15%)
+ epoch  3  loss ave.:   0.1021     0.097 [sec wall]   test: 9676/10000 (96.76%)
+ epoch  4  loss ave.:   0.0775     0.098 [sec wall]   test: 9730/10000 (97.30%)
+ epoch  5  loss ave.:   0.0608     0.101 [sec wall]   test: 9749/10000 (97.49%)
+ epoch  6  loss ave.:   0.0485     0.099 [sec wall]   test: 9764/10000 (97.64%)
+ epoch  7  loss ave.:   0.0390     0.098 [sec wall]   test: 9774/10000 (97.74%)
+ epoch  8  loss ave.:   0.0316     0.099 [sec wall]   test: 9789/10000 (97.89%)
+ epoch  9  loss ave.:   0.0257     0.099 [sec wall]   test: 9792/10000 (97.92%)
+ epoch 10  loss ave.:   0.0210     0.099 [sec wall]   test: 9800/10000 (98.00%)
+ epoch 11  loss ave.:   0.0172     0.099 [sec wall]   test: 9800/10000 (98.00%)
+ epoch 12  loss ave.:   0.0142     0.099 [sec wall]   test: 9805/10000 (98.05%)
+ epoch 13  loss ave.:   0.0119     0.098 [sec wall]   test: 9808/10000 (98.08%)
+ epoch 14  loss ave.:   0.0100     0.099 [sec wall]   test: 9809/10000 (98.09%)
+ epoch 15  loss ave.:   0.0085     0.098 [sec wall]   test: 9811/10000 (98.11%)
+ epoch 16  loss ave.:   0.0072     0.099 [sec wall]   test: 9813/10000 (98.13%)
+ epoch 17  loss ave.:   0.0063     0.099 [sec wall]   test: 9815/10000 (98.15%)
+ epoch 18  loss ave.:   0.0055     0.098 [sec wall]   test: 9820/10000 (98.20%)
+ epoch 19  loss ave.:   0.0048     0.099 [sec wall]   test: 9818/10000 (98.18%)
+ epoch 20  loss ave.:   0.0043     0.099 [sec wall]   test: 9817/10000 (98.17%)
+RESULT train ((:fc 1000) (:relu) (:fc 1000) (:relu) (:fc 10)) ((1 0.34171 0.451871 9473) (2 0.145478 0.099235 9615) (3 0.102149 0.09702 9676) (4 0.077548 0.097824 9730) (5 0.060794 0.100768 9749) (6 0.048461 0.099298 9764) (7 0.03902 0.097929 9774) (8 0.031586 0.098678 9789) (9 0.025699 0.09944 9792) (10 0.020976 0.098573 9800) (11 0.017206 0.099334 9800) (12 0.014228 0.098793 9805) (13 0.011878 0.098063 9808) (14 0.00998 0.098783 9809) (15 0.008466 0.097786 9811) (16 0.007236 0.099342 9813) (17 0.006254 0.098587 9815) (18 0.005466 0.098022 9820) (19 0.004817 0.098767 9818) (20 0.004282 0.098578 9817))
+RESULT trainacc ((:fc 1000) (:relu) (:fc 1000) (:relu) (:fc 10)) (59983 0.004675)
+net=((:conv 5 6) (:relu) (:pool) (:conv 5 16) (:relu) (:pool) (:fc 120) (:relu) (:fc 84) (:relu) (:fc 10))
+ params=44426 device=:gpu precision=32 batch=200 lr=0.001
+ epoch  1  loss ave.:   1.0893     0.265 [sec wall]   test: 9493/10000 (94.93%)
+ epoch  2  loss ave.:   0.1424     0.262 [sec wall]   test: 9704/10000 (97.04%)
+ epoch  3  loss ave.:   0.0892     0.262 [sec wall]   test: 9753/10000 (97.53%)
+ epoch  4  loss ave.:   0.0692     0.263 [sec wall]   test: 9780/10000 (97.80%)
+ epoch  5  loss ave.:   0.0559     0.262 [sec wall]   test: 9802/10000 (98.02%)
+ epoch  6  loss ave.:   0.0474     0.262 [sec wall]   test: 9817/10000 (98.17%)
+ epoch  7  loss ave.:   0.0408     0.263 [sec wall]   test: 9832/10000 (98.32%)
+ epoch  8  loss ave.:   0.0340     0.261 [sec wall]   test: 9829/10000 (98.29%)
+ epoch  9  loss ave.:   0.0301     0.262 [sec wall]   test: 9831/10000 (98.31%)
+ epoch 10  loss ave.:   0.0256     0.263 [sec wall]   test: 9817/10000 (98.17%)
+ epoch 11  loss ave.:   0.0227     0.262 [sec wall]   test: 9820/10000 (98.20%)
+ epoch 12  loss ave.:   0.0203     0.262 [sec wall]   test: 9803/10000 (98.03%)
+ epoch 13  loss ave.:   0.0177     0.261 [sec wall]   test: 9830/10000 (98.30%)
+ epoch 14  loss ave.:   0.0166     0.263 [sec wall]   test: 9805/10000 (98.05%)
+ epoch 15  loss ave.:   0.0152     0.263 [sec wall]   test: 9836/10000 (98.36%)
+ epoch 16  loss ave.:   0.0135     0.261 [sec wall]   test: 9816/10000 (98.16%)
+ epoch 17  loss ave.:   0.0112     0.261 [sec wall]   test: 9847/10000 (98.47%)
+ epoch 18  loss ave.:   0.0139     0.263 [sec wall]   test: 9822/10000 (98.22%)
+ epoch 19  loss ave.:   0.0105     0.260 [sec wall]   test: 9853/10000 (98.53%)
+ epoch 20  loss ave.:   0.0107     0.264 [sec wall]   test: 9850/10000 (98.50%)
+RESULT train ((:conv 5 6) (:relu) (:pool) (:conv 5 16) (:relu) (:pool) (:fc 120) (:relu) (:fc 84) (:relu) (:fc 10)) ((1 1.08929 0.265348 9493) (2 0.142376 0.26177 9704) (3 0.089182 0.261695 9753) (4 0.069216 0.263114 9780) (5 0.055931 0.262433 9802) (6 0.047352 0.261555 9817) (7 0.040814 0.263498 9832) (8 0.033968 0.261334 9829) (9 0.030123 0.262303 9831) (10 0.025566 0.262754 9817) (11 0.022722 0.262113 9820) (12 0.020317 0.262121 9803) (13 0.017673 0.261122 9830) (14 0.016644 0.262788 9805) (15 0.015241 0.262625 9836) (16 0.013498 0.261474 9816) (17 0.011225 0.261199 9847) (18 0.013931 0.26298 9822) (19 0.010491 0.259863 9853) (20 0.010727 0.264216 9850))
+RESULT trainacc ((:conv 5 6) (:relu) (:pool) (:conv 5 16) (:relu) (:pool) (:fc 120) (:relu) (:fc 84) (:relu) (:fc 10)) (59580 0.021966)
+net=((:conv 5 20) (:relu) (:pool) (:conv 5 50) (:relu) (:pool) (:fc 500) (:relu) (:fc 10))
+ params=431080 device=:gpu precision=32 batch=200 lr=0.001
+ epoch  1  loss ave.:   0.3367     0.436 [sec wall]   test: 9753/10000 (97.53%)
+ epoch  2  loss ave.:   0.0672     0.433 [sec wall]   test: 9836/10000 (98.36%)
+ epoch  3  loss ave.:   0.0458     0.432 [sec wall]   test: 9867/10000 (98.67%)
+ epoch  4  loss ave.:   0.0345     0.429 [sec wall]   test: 9890/10000 (98.90%)
+ epoch  5  loss ave.:   0.0272     0.436 [sec wall]   test: 9896/10000 (98.96%)
+ epoch  6  loss ave.:   0.0218     0.431 [sec wall]   test: 9899/10000 (98.99%)
+ epoch  7  loss ave.:   0.0174     0.434 [sec wall]   test: 9904/10000 (99.04%)
+ epoch  8  loss ave.:   0.0139     0.429 [sec wall]   test: 9909/10000 (99.09%)
+ epoch  9  loss ave.:   0.0109     0.430 [sec wall]   test: 9905/10000 (99.05%)
+ epoch 10  loss ave.:   0.0086     0.430 [sec wall]   test: 9911/10000 (99.11%)
+ epoch 11  loss ave.:   0.0069     0.430 [sec wall]   test: 9914/10000 (99.14%)
+ epoch 12  loss ave.:   0.0054     0.429 [sec wall]   test: 9922/10000 (99.22%)
+ epoch 13  loss ave.:   0.0044     0.428 [sec wall]   test: 9919/10000 (99.19%)
+ epoch 14  loss ave.:   0.0036     0.429 [sec wall]   test: 9919/10000 (99.19%)
+ epoch 15  loss ave.:   0.0029     0.432 [sec wall]   test: 9914/10000 (99.14%)
+ epoch 16  loss ave.:   0.0026     0.433 [sec wall]   test: 9917/10000 (99.17%)
+ epoch 17  loss ave.:   0.0024     0.428 [sec wall]   test: 9916/10000 (99.16%)
+ epoch 18  loss ave.:   0.0019     0.428 [sec wall]   test: 9914/10000 (99.14%)
+ epoch 19  loss ave.:   0.0018     0.431 [sec wall]   test: 9916/10000 (99.16%)
+ epoch 20  loss ave.:   0.0013     0.432 [sec wall]   test: 9917/10000 (99.17%)
+RESULT train ((:conv 5 20) (:relu) (:pool) (:conv 5 50) (:relu) (:pool) (:fc 500) (:relu) (:fc 10)) ((1 0.336724 0.435711 9753) (2 0.06717 0.432523 9836) (3 0.04578 0.431799 9867) (4 0.034483 0.428615 9890) (5 0.027225 0.43603 9896) (6 0.021789 0.431201 9899) (7 0.017373 0.43421 9904) (8 0.013905 0.428845 9909) (9 0.010879 0.429798 9905) (10 0.008585 0.429854 9911) (11 0.006857 0.430238 9914) (12 0.005391 0.428776 9922) (13 0.004399 0.42832 9919) (14 0.003583 0.429374 9919) (15 0.002918 0.43223 9914) (16 0.002596 0.432775 9917) (17 0.002397 0.428425 9916) (18 0.001875 0.428279 9914) (19 0.001841 0.431312 9916) (20 0.001271 0.432049 9917))
+RESULT trainacc ((:conv 5 20) (:relu) (:pool) (:conv 5 50) (:relu) (:pool) (:fc 500) (:relu) (:fc 10)) (59969 0.001972)
+RESULT epoch ((:fc 1000) (:relu) (:fc 1000) (:relu) (:fc 10)) gpu32   0.0985
+RESULT epoch ((:fc 1000) (:relu) (:fc 1000) (:relu) (:fc 10)) gpu64   1.4299
+RESULT epoch ((:fc 1000) (:relu) (:fc 1000) (:relu) (:fc 10)) cpu64   7.5504
+RESULT epoch ((:fc 1000) (:relu) (:fc 1000) (:relu) (:fc 10)) cpu32   4.2500
+RESULT epoch ((:conv 5 6) (:relu) (:pool) (:conv 5 16) (:relu) (:pool) (:fc 120) (:relu) (:fc 84) (:relu) (:fc 10)) gpu32   0.2600
+RESULT epoch ((:conv 5 6) (:relu) (:pool) (:conv 5 16) (:relu) (:pool) (:fc 120) (:relu) (:fc 84) (:relu) (:fc 10)) gpu64   0.8853
+RESULT epoch ((:conv 5 6) (:relu) (:pool) (:conv 5 16) (:relu) (:pool) (:fc 120) (:relu) (:fc 84) (:relu) (:fc 10)) cpu64  14.7643
+RESULT epoch ((:conv 5 6) (:relu) (:pool) (:conv 5 16) (:relu) (:pool) (:fc 120) (:relu) (:fc 84) (:relu) (:fc 10)) cpu32  12.1851
+RESULT epoch ((:conv 5 20) (:relu) (:pool) (:conv 5 50) (:relu) (:pool) (:fc 500) (:relu) (:fc 10)) gpu32   0.4262
+RESULT epoch ((:conv 5 20) (:relu) (:pool) (:conv 5 50) (:relu) (:pool) (:fc 500) (:relu) (:fc 10)) gpu64   3.6108
+RESULT epoch ((:conv 5 20) (:relu) (:pool) (:conv 5 50) (:relu) (:pool) (:fc 500) (:relu) (:fc 10)) cpu64  35.8008
+RESULT epoch ((:conv 5 20) (:relu) (:pool) (:conv 5 50) (:relu) (:pool) (:fc 500) (:relu) (:fc 10)) cpu32  28.9670
+RESULT sweep 50 ((:fc 1000) (:relu) (:fc 1000) (:relu) (:fc 10))   0.2063
+RESULT sweep 50 ((:conv 5 20) (:relu) (:pool) (:conv 5 50) (:relu) (:pool) (:fc 500) (:relu) (:fc 10))   0.5635
+RESULT sweep 100 ((:fc 1000) (:relu) (:fc 1000) (:relu) (:fc 10))   0.1423
+RESULT sweep 100 ((:conv 5 20) (:relu) (:pool) (:conv 5 50) (:relu) (:pool) (:fc 500) (:relu) (:fc 10))   0.4646
+RESULT sweep 200 ((:fc 1000) (:relu) (:fc 1000) (:relu) (:fc 10))   0.0997
+RESULT sweep 200 ((:conv 5 20) (:relu) (:pool) (:conv 5 50) (:relu) (:pool) (:fc 500) (:relu) (:fc 10))   0.4605
+RESULT sweep 500 ((:fc 1000) (:relu) (:fc 1000) (:relu) (:fc 10))   0.0688
+RESULT sweep 500 ((:conv 5 20) (:relu) (:pool) (:conv 5 50) (:relu) (:pool) (:fc 500) (:relu) (:fc 10))   0.5170
+RESULT sweep 1000 ((:fc 1000) (:relu) (:fc 1000) (:relu) (:fc 10))   0.0594
+RESULT sweep 1000 ((:conv 5 20) (:relu) (:pool) (:conv 5 50) (:relu) (:pool) (:fc 500) (:relu) (:fc 10))   0.5258
+RESULT layerprof :gpu (((:conv 5 20) 0.04901 0.037944) ((:relu) 0.016735 0.027174) ((:pool) 0.010115 0.022035) ((:conv 5 50) 0.07659 0.137946) ((:relu) 0.005489 0.005835) ((:pool) 0.005531 0.008054) ((:fc 500) 0.015779 0.018614) ((:relu) 0.002698 0.002589) ((:fc 10) 0.008688 0.011784))
+RESULT layerprof :cpu (((:conv 5 20) 5.69699 2.65398) ((:relu) 0.306066 0.553249) ((:pool) 0.685382 0.426045) ((:conv 5 50) 10.7006 5.67424) ((:relu) 0.08563 0.260553) ((:pool) 0.16921 0.204073) ((:fc 500) 0.532558 0.779537) ((:relu) 0.019109 0.070103) ((:fc 10) 0.036025 0.07567))
+RESULT infer ((:fc 1000) (:relu) (:fc 1000) (:relu) (:fc 10)) :gpu (0.004239 9817)
+RESULT infer ((:fc 1000) (:relu) (:fc 1000) (:relu) (:fc 10)) :cpu (0.268014 9817)
+RESULT infer ((:conv 5 6) (:relu) (:pool) (:conv 5 16) (:relu) (:pool) (:fc 120) (:relu) (:fc 84) (:relu) (:fc 10)) :gpu (0.015708 9850)
+RESULT infer ((:conv 5 6) (:relu) (:pool) (:conv 5 16) (:relu) (:pool) (:fc 120) (:relu) (:fc 84) (:relu) (:fc 10)) :cpu (1.30353 9850)
+RESULT infer ((:conv 5 20) (:relu) (:pool) (:conv 5 50) (:relu) (:pool) (:fc 500) (:relu) (:fc 10)) :gpu (0.041264 9917)
+RESULT infer ((:conv 5 20) (:relu) (:pool) (:conv 5 50) (:relu) (:pool) (:fc 500) (:relu) (:fc 10)) :cpu (2.67953 9917)
+DONE

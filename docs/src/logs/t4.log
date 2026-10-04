@@ -1,0 +1,30 @@
+;; .eusrc executed!! *rcb4eus-dir*=/home/mi/kxreus added, *load-path* updated!!
+(test-mnist-train)
+;;(test-mnist-batch 200) ;; train from train-images
+;;(test-mnist-test) ;; test test-images
+;;(test-mnist-train) ;; test train-images
+;; (test-mnist-batch-cuda 200)        ;; train on GPU (FP64)
+;; (test-mnist-batch-cuda 200 :precision 32)
+;; (test-mnist-batch-lisp 200 :dgemm :cuda)
+;; (test-mnist-cuda-test)             ;; test mlp/mnist-mlp-19.l on GPU
+;; (bench-mnist-cuda)
+Loading datasets ... mnist-datasets.l
+Loaded datasets ...
+(in:   784    out:  1000)
+(in:  1000    out:  1000)
+(in:  1000    out:    10)
+
+(in:   784    out:  1000)
+(in:  1000    out:  1000)
+(in:  1000    out:    10)
+
+(in:   784    out:  1000)
+(in:  1000    out:  1000)
+(in:  1000    out:    10)
+
+batch 0 lisp 2.41493  c-cpu 2.41493  gpu-fp64 2.41493
+batch 1 lisp 1.97393  c-cpu 1.97393  gpu-fp64 1.97393
+batch 2 lisp 2.1109  c-cpu 2.1109  gpu-fp64 2.1109
+after50 |W_lisp-W_cpu| 1.804960e-14  |W_lisp-W_gpu| 4.083672e-15  |W_lisp| 40.9866
+after50 |W_lisp-W_cpu| 2.705405e-14  |W_lisp-W_gpu| 5.023561e-15  |W_lisp| 46.2419
+after50 |W_lisp-W_cpu| 3.056942e-15  |W_lisp-W_gpu| 2.957635e-15  |W_lisp| 5.24662

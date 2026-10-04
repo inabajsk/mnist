@@ -1,0 +1,7 @@
+node_modules/
+*.pptx
+*.npz
+*.npy
+*.pdf
+qa*/
+render/
