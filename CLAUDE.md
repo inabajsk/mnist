@@ -67,13 +67,14 @@ SKILL_DIR=<pptx スキルのディレクトリ> node build_phone.js   # build.js
 - スライド: `cd docs/src && python3 mkmacios.py && NODE_PATH=$PWD/node_modules SKILL_DIR=<pptx スキル> node build_macios.js`
 - この Mac には LibreOffice がない（scratchpad に置いて QA した）。BIZ UD フォントは ~/Library/Fonts に入れた
 
-## jskeus のロボットを iPhone で表示（eusview/, 2026-10-05）
+## EusView（jskeus / kxreus のロボットを iPhone・Mac・Android・デスクトップで表示）→ kxreus/eusview に移した（2026-10-06）
 
-- `eusview/eus2json.l`: ロボット → JSON（リンクの木・メッシュ・関節・姿勢・動作）。`eusview/run-eus.sh <script.l>` で実行（Homebrew jskeus は libjpeg の版違いで irteusgl が動かないので、bin/eusgl + irtload.l で起動。起動直後の落ちはやり直す）
-- `eusview/robots/*.json`: demo.l の sample-robot / arm / hand / multidof-arm, sample-robot-walk（歩行）, kxreus の kxrl2l6a6h2 など 5 体。`EUSVIEW_ROBOTS="名前 …" eusview/run-eus.sh eusview/export-kxr.l` で追加（名前は kxr-robot-names.txt）。KHR 系は stl2eus がなく不可
-- `eusview/ios/`: iPhone アプリ EusView（SceneKit）。`make -C eusview/ios project DEVELOPMENT_TEAM=39WXY2YNCK XCODEGEN=<xcodegen> && make -C eusview/ios device DEVICE=<id>`
-- 実時間: `python3 eusview/live.py`（EusLisp → TCP 8767 → WebSocket 8766 → iPhone）。EusLisp は `eus2live.l` の `(live-connect)` `(live-send robot)`。`live-walk.l` で iPhone の sample-robot が歩くことを確認済み
-- 注意: 最初の kxr の書き出しで `~/kxreus/glbodies/` に .bod が 4 つできた（ユーザーに削除を依頼済み）。今はキャッシュを eusview/cache に向けている
+- もとはこのリポジトリの `eusview/`（アプリ・書き出しのスクリプト・ロボットの JSON・BVH・全身 QP）と
+  スライド `docs/eusview.pptx`（`docs/src/build_eusview.js`, `docs/src/eusview_media/`）。
+  **今は kxreus（GitHub inabajsk/kxreus）の `eusview/` と `eusview/docs/` にある**（~/kxreus/eusview）。mnist からは消した。
+- 使い方・作業の記録は `~/kxreus/eusview/README.md`, `eusview/bvh/QP.md`, `eusview/docs/README.md`。
+- 書き出しは `cd ~/kxreus && eusview/run-eus.sh eusview/export-demo.l`（run-eus.sh が `EUSVIEW_DIR` を渡す）。
+- 注意: kxreus の glbodies には書き込まない（キャッシュは `kxreus/eusview/cache`, git に入れない）。
 
 ## kxreus の EusView デモ（Ubuntu 向け, 2026-10-05）
 

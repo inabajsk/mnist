@@ -64,3 +64,9 @@ See docs/mnist_phone.pptx.
     make -C ios project DEVELOPMENT_TEAM=<team id>        # iPhone app (XcodeGen), then build/run in Xcode
 
 The same benchmark code (ios/MNISTBench) runs on Mac and iPhone. See docs/mnist_mac_iphone.pptx.
+
+# EusView (robot viewer) -- moved to kxreus
+
+The EusView apps (iPhone / Mac / Android / desktop, jskeus and kxreus robots, BVH, whole-body QP) and
+their slides were in eusview/ and docs/eusview.pptx of this branch. They were moved to kxreus/eusview
+(GitHub inabajsk/kxreus, eusview/ and eusview/docs/) on 2026-10-06.
