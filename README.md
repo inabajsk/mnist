@@ -57,3 +57,10 @@ The page runs the MLP and CNN with hand-written JavaScript and TensorFlow.js
 (WASM / WebGL / WebGPU / CPU) and measures inference and training time.
 phone/onnx/*.onnx can be used from apps (ONNX Runtime Mobile, Core ML via coremltools).
 See docs/mnist_phone.pptx.
+
+# Mac and iPhone version
+
+    make -C ios mac && ios/build/mac/mnistbench           # Mac: C++ + Accelerate, GPU (MPSGraph), Core ML
+    make -C ios project DEVELOPMENT_TEAM=<team id>        # iPhone app (XcodeGen), then build/run in Xcode
+
+The same benchmark code (ios/MNISTBench) runs on Mac and iPhone. See docs/mnist_mac_iphone.pptx.

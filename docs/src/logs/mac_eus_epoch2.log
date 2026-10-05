@@ -1,0 +1,19 @@
+;; .eusrc executed!! *rcb4eus-dir*=/Users/inaba/kxreus added, *load-path* updated!!
+ENV VECLIB_MAXIMUM_THREADS=nil
+(test-mnist-train)
+;;(test-mnist-batch 200) ;; train from train-images
+;;(test-mnist-test) ;; test test-images
+;;(test-mnist-train) ;; test train-images
+TIME load-nn.l wall    0.011 s
+TIME load-datasets wall   23.011 s cpu   22.990 s
+DATA 60000 60000 10000 10000
+(in:   784    out:  1000)
+(in:  1000    out:  1000)
+(in:  1000    out:    10)
+
+learning rate:  0.001
+ Sun Oct  4 20:05:49 2026   loss ave.:  0.3428 :  43 [sec]
+EPOCH 1 wall   30.046 s cpu   44.930 s cpu/wall  1.50 (not saved: mlp/mnist-mlp-0.l)
+ Sun Oct  4 20:06:16 2026   loss ave.:  0.1456 :  42 [sec]
+EPOCH 2 wall   27.061 s cpu   41.500 s cpu/wall  1.53 (not saved: mlp/mnist-mlp-1.l)
+RESULT mac nn.l bs200 epochs ((30.046 44.93) (27.0607 41.5))

@@ -1,0 +1,38 @@
+;; .eusrc executed!! *rcb4eus-dir*=/Users/inaba/kxreus added, *load-path* updated!!
+ENV VECLIB_MAXIMUM_THREADS=nil
+(test-mnist-train)
+;;(test-mnist-batch 200) ;; train from train-images
+;;(test-mnist-test) ;; test test-images
+;;(test-mnist-train) ;; test train-images
+TIME load-nn.l wall    0.009 s
+TIME load-datasets wall   34.241 s cpu   32.050 s
+DATA 60000 60000 10000 10000
+(in:   784    out:  1000)
+(in:  1000    out:  1000)
+(in:  1000    out:    10)
+
+learning rate:  0.001
+ Sun Oct  4 20:04:20 2026   loss ave.:  0.3428 :  54 [sec]
+EPOCH 1 wall   44.793 s cpu   57.280 s cpu/wall  1.28 (not saved: mlp/mnist-mlp-0.l)
+RESULT mac nn.l bs200 epochs ((44.7926 57.28))
+TIME load-mlp-19 wall   15.943 s
+RESULT mac test mnist-mlp-19 correct 9824 / 10000
+TIME test-mnist-test wall   10.177 s cpu   22.510 s
+      105.36 real       118.67 user         6.46 sys
+          1834938368  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+             1061948  page reclaims
+                  27  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   1  signals received
+                1541  voluntary context switches
+              343241  involuntary context switches
+            21684891  instructions retired
+            21542107  cycles elapsed
+              524288  peak memory footprint

@@ -10,6 +10,7 @@
 | `mnist_cuda.pptx` | EusLisp と CUDA の接続方法 4 つ（A defforeign + C ライブラリ / B CUDAPROD モジュール / C libcublas 直接 / D PyTorch 別プロセス）と速度比較 |
 | `mnist_cnn.pptx` | CNN あり / なしの比較（認識率・時間）、用語、学習のしくみ（MLP と CNN の逆伝播、カーネルの更新）、LeNet、パラメータの効果 |
 | `mnist_phone.pptx` | スマートフォンで NN を動かす方法・AI 機能、ブラウザの計測ページ、時間比較（**スマートフォンの結果は未反映**） |
+| `mnist_mac_iphone.pptx` | Mac（MacBook Pro 2019, Intel）と iPhone 16 Pro での計測: EusLisp nn.l（Mac）, C++ + Accelerate, GPU（MPSGraph）, Core ML 旧形式・新形式（FP16）, ハードウェアを使う・使わないの比較 |
 
 コード: `CUDA/src/cudamlp.cu`（MLP, GPU/CPU）, `CUDA/src/cudacnn.cu`（CNN, GPU/CPU 両用）, `cudalib.l`, `nn-cuda.l`, `cudacnn.l`, `nn-cnn.l`, `CUDAPROD/`, `cuda-direct.l`, `cuda-ipc.l`, `ipc/torch_server.py`, `bench-cuda.l`, `phone/`, `ios/models/`。
 
@@ -57,9 +58,33 @@ SKILL_DIR=<pptx スキルのディレクトリ> node build_phone.js   # build.js
 - Core ML: `ios/models/MNIST{MLP,CNN}.mlmodel`（NeuralNetwork 形式, 入力 `image` 1×1×28×28, 出力 `prob` 1×10）。DGX の coremltools では ML Program 形式が書けなかったため。Mac では `ios/models/tocoreml.py` を `convert_to="mlprogram"` に変えて作り直せる（`pip install coremltools torch`）。
 - データとモデルの作り直し: `mkdir -p mlp-cuda && cp docs/src/eus/params-cnn.l mlp-cuda/mnist-cnn-9.l && python3 phone/make_data.py`
 
+## Mac と iPhone の計測（2026-10-04）
+
+- `ios/`: 計測コード。`Engine/cpucnn.cpp`（cudacnn.cu の CPU 経路を Accelerate + GCD に移植, threads=2 で素朴なループ）, `Shared/Bench.swift`, `Shared/GPUNet.swift`（MPSGraph）, `App/`（iPhone）, `Mac/`（コマンドライン）, `models/mkmlprogram.py`（ML Program FP16 のモデル, coremltools だけで作れる）
+- Mac: `make -C ios mac && ios/build/mac/mnistbench --out phone/native/mac_runN.json`
+- iPhone（Mi16pro, iPhone17,1, チーム 39WXY2YNCK）: `make -C ios project DEVELOPMENT_TEAM=39WXY2YNCK XCODEGEN=<xcodegen>` → `xcodebuild ... -allowProvisioningUpdates build` → `xcrun devicectl device install app` → `xcrun devicectl device process launch --console --device <id> jp.jsk.mnist.MNISTBench -- -autorun -exit`（画面のロックを解除しておく）。出力の RESULT-JSON の部分を `phone/native/iphone_runN.json` に（info に name, chip を足す）
+- EusLisp を Mac で: Homebrew の jskeus。`MAC_EPOCH=2 eus '(load "docs/src/eus/mac_bench.l")'`（起動直後に落ちることがあるのでやり直す）。git-lfs は `~/bin/git-lfs`
+- スライド: `cd docs/src && python3 mkmacios.py && NODE_PATH=$PWD/node_modules SKILL_DIR=<pptx スキル> node build_macios.js`
+- この Mac には LibreOffice がない（scratchpad に置いて QA した）。BIZ UD フォントは ~/Library/Fonts に入れた
+
+## jskeus のロボットを iPhone で表示（eusview/, 2026-10-05）
+
+- `eusview/eus2json.l`: ロボット → JSON（リンクの木・メッシュ・関節・姿勢・動作）。`eusview/run-eus.sh <script.l>` で実行（Homebrew jskeus は libjpeg の版違いで irteusgl が動かないので、bin/eusgl + irtload.l で起動。起動直後の落ちはやり直す）
+- `eusview/robots/*.json`: demo.l の sample-robot / arm / hand / multidof-arm, sample-robot-walk（歩行）, kxreus の kxrl2l6a6h2 など 5 体。`EUSVIEW_ROBOTS="名前 …" eusview/run-eus.sh eusview/export-kxr.l` で追加（名前は kxr-robot-names.txt）。KHR 系は stl2eus がなく不可
+- `eusview/ios/`: iPhone アプリ EusView（SceneKit）。`make -C eusview/ios project DEVELOPMENT_TEAM=39WXY2YNCK XCODEGEN=<xcodegen> && make -C eusview/ios device DEVICE=<id>`
+- 実時間: `python3 eusview/live.py`（EusLisp → TCP 8767 → WebSocket 8766 → iPhone）。EusLisp は `eus2live.l` の `(live-connect)` `(live-send robot)`。`live-walk.l` で iPhone の sample-robot が歩くことを確認済み
+- 注意: 最初の kxr の書き出しで `~/kxreus/glbodies/` に .bod が 4 つできた（ユーザーに削除を依頼済み）。今はキャッシュを eusview/cache に向けている
+
+## kxreus の EusView デモ（Ubuntu 向け, 2026-10-05）
+
+- ~/kxreus に eusview.l（irteusgl のデモ: KXR/KHR/JSK, 姿勢, 動作の繰り返し, physics（eusview-ode/ の ODE, kxrdyna があればそちら）, servo, live）, eusview-physics.l, eusview-xft.l（Xft で日本語）, eusview.sh, eusview-live.py, projects/Hello_khr3*。Makefile: eusview, eusview-ode, eusview-desktop
+- inabajsk/kxreus に push 済み（befee34, 887b7d2, 1c1bdd7, 202ac20, 19b6a20）。~/kxreus の Makefile の /usr/bin/uname はこの Mac だけの手元の変更（コミットしない）
+- Mac の XQuartz で動作確認済み。kxreus の EusView → live → iPhone の EusView で kxrl2l6a6h2 の歩行が動くことを確認。Ubuntu では未確認
+- 摩擦: mu 0.8, 接触点 4, soft_cfm 0.001（kxr-dyna の mu 0.1 / 1 点では立っているだけで滑る）
+
 ## 次にやること
 
-1. **iPhone アプリ**（Mac, Xcode）: `ios/` に SwiftUI のアプリを作る。
+1. ~~**iPhone アプリ**~~（済み, 上の「Mac と iPhone の計測」）。以下は当初の計画:
    - Core ML の computeUnits を `.cpuOnly` / `.cpuAndGPU` / `.cpuAndNeuralEngine` / `.all` で切り替え、テスト 10,000 枚の推論時間（まとめて・1 枚ずつ）と認識数（MLP 9824, CNN 9917 になるはず）を測る。
    - Accelerate（`cblas_sgemm`）で MLP と CNN の学習時間も測る（`CUDA/src/cudamlp.cu` の cpumlp と `cudacnn.cu` の CPU 経路を移植）。
    - 結果は画面に表示し、JSON をコピーできるようにする（チャットに貼ってもらう）。

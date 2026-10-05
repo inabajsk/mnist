@@ -1,0 +1,647 @@
+{
+ "dgx": {
+  "eus": 26.1,
+  "cpu32": 4.25,
+  "cpu32_cnn": 28.967,
+  "cpu64": 7.5504,
+  "cpu64_cnn": 35.8008,
+  "gpu32": 0.0985,
+  "gpu32_cnn": 0.4262,
+  "infer_cpu_ms": {
+   "MLP": 0.026801399999999996,
+   "CNN": 0.267953
+  },
+  "infer_gpu_ms": {
+   "MLP": 0.00042389999999999995,
+   "CNN": 0.0041264000000000006
+  },
+  "onnx_one_ms": {
+   "MLP": 0.07,
+   "CNN": 0.089
+  }
+ },
+ "eus_mac": {
+  "runs": [
+   {
+    "log": "mac_eus_epoch1.log",
+    "epoch": 1,
+    "wall": 44.793,
+    "cpu": 57.28
+   },
+   {
+    "log": "mac_eus_epoch2.log",
+    "epoch": 1,
+    "wall": 30.046,
+    "cpu": 44.93
+   },
+   {
+    "log": "mac_eus_epoch2.log",
+    "epoch": 2,
+    "wall": 27.061,
+    "cpu": 41.5
+   },
+   {
+    "log": "mac_eus_epoch2b.log",
+    "epoch": 1,
+    "wall": 33.039,
+    "cpu": 52.01
+   },
+   {
+    "log": "mac_eus_epoch2b.log",
+    "epoch": 2,
+    "wall": 30.475,
+    "cpu": 49.1
+   },
+   {
+    "log": "mac_eus_veclib1.log",
+    "epoch": 1,
+    "wall": 35.922,
+    "cpu": 35.9
+   }
+  ],
+  "best_wall": 27.061,
+  "max_wall": 33.039,
+  "one_thread": 35.922,
+  "test_correct": 9824
+ },
+ "devices": {
+  "mac": {
+   "info": {
+    "activeCores": "8",
+    "cores": "8",
+    "cpu": "Intel(R) Core(TM) i7-8569U CPU @ 2.80GHz",
+    "gpu": "Intel(R) Iris(TM) Plus Graphics 655",
+    "machine": "x86_64",
+    "memoryGB": "16.0",
+    "model": "MacBookPro15,2",
+    "os": "Version 15.7.7 (Build 24G720)",
+    "perfCores": "4",
+    "quick": "0",
+    "thermalEnd": "fair",
+    "thermalStart": "nominal",
+    "totalSec": "149.8"
+   },
+   "nruns": 2,
+   "epoch": {
+    "C++ 素朴なループ FP32（1 スレッド, SIMD なし）|MLP": 244.28206476004564,
+    "C++ + Accelerate FP32（1 スレッド）|MLP": 6.437220110001363,
+    "C++ + Accelerate FP32|MLP": 2.617209099998945,
+    "C++ + Accelerate FP64|MLP": 4.3123997900147515,
+    "GPU（Metal MPSGraph）FP32|MLP": 4.764975499992943,
+    "C++ 素朴なループ FP32（1 スレッド, SIMD なし）|CNN": 670.0278473400613,
+    "C++ + Accelerate FP32（1 スレッド）|CNN": 71.19522297000003,
+    "C++ + Accelerate FP32|CNN": 19.828502370000933,
+    "C++ + Accelerate FP64|CNN": 27.2904348999964,
+    "GPU（Metal MPSGraph）FP32|CNN": 51.448119319993566
+   },
+   "infer": {
+    "C++ 素朴なループ FP32（1 スレッド, SIMD なし）|MLP": {
+     "batch_ms": 1.776796980000654,
+     "one_ms": null,
+     "acc": 0.983,
+     "median_ms": null
+    },
+    "C++ + Accelerate FP32|MLP": {
+     "batch_ms": 0.01837794560005932,
+     "one_ms": 0.08897614999932557,
+     "acc": 0.9824,
+     "median_ms": null
+    },
+    "C++ + Accelerate FP64|MLP": {
+     "batch_ms": 0.029926130199964974,
+     "one_ms": null,
+     "acc": 0.9824,
+     "median_ms": null
+    },
+    "GPU（Metal MPSGraph）FP32|MLP": {
+     "batch_ms": 0.04826911849995667,
+     "one_ms": 1.1074710000011692,
+     "acc": 0.9824,
+     "median_ms": null
+    },
+    "Core ML FP16 CPU|MLP": {
+     "batch_ms": 0.044858693600144765,
+     "one_ms": 0.5820589365002888,
+     "acc": 0.9824,
+     "median_ms": 0.565,
+     "load_ms": 30.607253000198398,
+     "plan": "CPU 7"
+    },
+    "Core ML FP16 CPU+GPU|MLP": {
+     "batch_ms": 0.02786742520002008,
+     "one_ms": 0.5743810320000193,
+     "acc": 0.9824,
+     "median_ms": 0.559,
+     "load_ms": 139.53921199936303,
+     "plan": "CPU 7"
+    },
+    "Core ML FP16 CPU+Neural Engine|MLP": {
+     "batch_ms": 0.04384643670000515,
+     "one_ms": 0.6326045930009059,
+     "acc": 0.9824,
+     "median_ms": 0.62,
+     "load_ms": 21.99877400016703,
+     "plan": "CPU 7"
+    },
+    "Core ML FP16 すべて|MLP": {
+     "batch_ms": 0.029003987699979916,
+     "one_ms": 0.6329619470006946,
+     "acc": 0.9824,
+     "median_ms": 0.621,
+     "load_ms": 142.17196600111492,
+     "plan": "CPU 7"
+    },
+    "Core ML CPU|MLP": {
+     "batch_ms": 0.11213515730005384,
+     "one_ms": 0.1295947709995744,
+     "acc": 0.9824,
+     "median_ms": 0.113,
+     "load_ms": 3.2941030003712513,
+     "plan": "CPU 5"
+    },
+    "Core ML CPU+GPU|MLP": {
+     "batch_ms": 0.8539811110999835,
+     "one_ms": 0.8190118080001412,
+     "acc": 0.9824,
+     "median_ms": 0.766,
+     "load_ms": 12.224521000462119,
+     "plan": "CPU 4, GPU 1"
+    },
+    "Core ML CPU+Neural Engine|MLP": {
+     "batch_ms": 0.1105039327000668,
+     "one_ms": 0.12998036399994817,
+     "acc": 0.9824,
+     "median_ms": 0.114,
+     "load_ms": 1.7252770003324258,
+     "plan": "CPU 5"
+    },
+    "Core ML すべて|MLP": {
+     "batch_ms": 0.9085286580000684,
+     "one_ms": 0.826424713999586,
+     "acc": 0.9824,
+     "median_ms": 0.765,
+     "load_ms": 10.793256000397378,
+     "plan": "CPU 4, GPU 1"
+    },
+    "C++ 素朴なループ FP32（1 スレッド, SIMD なし）|CNN": {
+     "batch_ms": 2.70392385499963,
+     "one_ms": null,
+     "acc": 0.994,
+     "median_ms": null
+    },
+    "C++ + Accelerate FP32|CNN": {
+     "batch_ms": 0.22440719240003093,
+     "one_ms": 0.4289843619999374,
+     "acc": 0.9917,
+     "median_ms": null
+    },
+    "C++ + Accelerate FP64|CNN": {
+     "batch_ms": 0.2891892814999664,
+     "one_ms": null,
+     "acc": 0.9917,
+     "median_ms": null
+    },
+    "GPU（Metal MPSGraph）FP32|CNN": {
+     "batch_ms": 0.12467095939991849,
+     "one_ms": 1.2640319880010793,
+     "acc": 0.9917,
+     "median_ms": null
+    },
+    "Core ML FP16 CPU|CNN": {
+     "batch_ms": 0.12620727970006554,
+     "one_ms": 0.3479542670002047,
+     "acc": 0.9917,
+     "median_ms": 0.341,
+     "load_ms": 25.98394000051485,
+     "plan": "CPU 10"
+    },
+    "Core ML FP16 CPU+GPU|CNN": {
+     "batch_ms": 0.22855307980007636,
+     "one_ms": 0.35283006000008754,
+     "acc": 0.9917,
+     "median_ms": 0.344,
+     "load_ms": 140.04830100020627,
+     "plan": "CPU 7, GPU 4"
+    },
+    "Core ML FP16 CPU+Neural Engine|CNN": {
+     "batch_ms": 0.12482078779994481,
+     "one_ms": 0.34666712600028404,
+     "acc": 0.9917,
+     "median_ms": 0.34,
+     "load_ms": 24.164704000213533,
+     "plan": "CPU 10"
+    },
+    "Core ML FP16 すべて|CNN": {
+     "batch_ms": 0.2261751940999602,
+     "one_ms": 0.35057434949976596,
+     "acc": 0.9917,
+     "median_ms": 0.343,
+     "load_ms": 143.55412699842418,
+     "plan": "CPU 7, GPU 4"
+    },
+    "Core ML CPU|CNN": {
+     "batch_ms": 0.12234966209998674,
+     "one_ms": 0.1422473570000875,
+     "acc": 0.9917,
+     "median_ms": 0.132,
+     "load_ms": 2.296147999004461,
+     "plan": "CPU 9"
+    },
+    "Core ML CPU+GPU|CNN": {
+     "batch_ms": 1.2421012275000067,
+     "one_ms": 1.184867570500046,
+     "acc": 0.9917,
+     "median_ms": 1.086,
+     "load_ms": 16.8061670010502,
+     "plan": "CPU 3, GPU 6"
+    },
+    "Core ML CPU+Neural Engine|CNN": {
+     "batch_ms": 0.12177198589997716,
+     "one_ms": 0.1408525560000271,
+     "acc": 0.9917,
+     "median_ms": 0.156,
+     "load_ms": 1.6943350001383806,
+     "plan": "CPU 9"
+    },
+    "Core ML すべて|CNN": {
+     "batch_ms": 1.2585252032000427,
+     "one_ms": 1.1483513119997042,
+     "acc": 0.9917,
+     "median_ms": 1.054,
+     "load_ms": 15.985007999915979,
+     "plan": "CPU 3, GPU 6"
+    }
+   }
+  },
+  "iphone": {
+   "info": {
+    "activeCores": "6",
+    "cores": "6",
+    "effCores": "4",
+    "gpu": "Apple A18 Pro GPU",
+    "machine": "iPhone17,1",
+    "memoryGB": "7.5",
+    "model": "D93AP",
+    "os": "Version 26.6.2 (Build 23G90)",
+    "perfCores": "2",
+    "quick": "0",
+    "thermalEnd": "fair",
+    "thermalStart": "nominal",
+    "totalSec": "46.6",
+    "name": "iPhone 16 Pro",
+    "chip": "A18 Pro"
+   },
+   "nruns": 2,
+   "epoch": {
+    "C++ 素朴なループ FP32（1 スレッド, SIMD なし）|MLP": 224.2217399999936,
+    "C++ + Accelerate FP32（1 スレッド）|MLP": 0.96165750000182,
+    "C++ + Accelerate FP32|MLP": 0.6621320900012506,
+    "C++ + Accelerate FP64|MLP": 1.606168329999491,
+    "GPU（Metal MPSGraph）FP32|MLP": 0.7345383299980313,
+    "C++ 素朴なループ FP32（1 スレッド, SIMD なし）|CNN": 380.3731499999776,
+    "C++ + Accelerate FP32（1 スレッド）|CNN": 16.21856083000239,
+    "C++ + Accelerate FP32|CNN": 7.441137499999968,
+    "C++ + Accelerate FP64|CNN": 10.766702079999959,
+    "GPU（Metal MPSGraph）FP32|CNN": 7.839344999993045
+   },
+   "infer": {
+    "C++ 素朴なループ FP32（1 スレッド, SIMD なし）|MLP": {
+     "batch_ms": 1.5771870830003536,
+     "one_ms": null,
+     "acc": 0.983,
+     "median_ms": null
+    },
+    "C++ + Accelerate FP32|MLP": {
+     "batch_ms": 0.00399254590001874,
+     "one_ms": 0.020943125000485452,
+     "acc": 0.9824,
+     "median_ms": null
+    },
+    "C++ + Accelerate FP64|MLP": {
+     "batch_ms": 0.01031367079995107,
+     "one_ms": null,
+     "acc": 0.9824,
+     "median_ms": null
+    },
+    "GPU（Metal MPSGraph）FP32|MLP": {
+     "batch_ms": 0.004961991700020008,
+     "one_ms": 0.6280876659984642,
+     "acc": 0.9824,
+     "median_ms": null
+    },
+    "Core ML FP16 CPU|MLP": {
+     "batch_ms": 0.0022515375000693896,
+     "one_ms": 0.04027743749975343,
+     "acc": 0.9824,
+     "median_ms": 0.037,
+     "load_ms": 64.61916700027359,
+     "plan": "CPU 9"
+    },
+    "Core ML FP16 CPU+GPU|MLP": {
+     "batch_ms": 0.01750539580007171,
+     "one_ms": 0.0419362499997078,
+     "acc": 0.9824,
+     "median_ms": 0.038,
+     "load_ms": 58.44995799998287,
+     "plan": "CPU 1, GPU 8"
+    },
+    "Core ML FP16 CPU+Neural Engine|MLP": {
+     "batch_ms": 0.002809675000025891,
+     "one_ms": 0.039826499999890075,
+     "acc": 0.9824,
+     "median_ms": 0.037,
+     "load_ms": 106.62904200034973,
+     "plan": "Neural Engine 9"
+    },
+    "Core ML FP16 すべて|MLP": {
+     "batch_ms": 0.002651154100021813,
+     "one_ms": 0.03975216700018791,
+     "acc": 0.9824,
+     "median_ms": 0.037,
+     "load_ms": 108.04841600020154,
+     "plan": "Neural Engine 9"
+    },
+    "Core ML CPU|MLP": {
+     "batch_ms": 0.03539585420003277,
+     "one_ms": 0.04443025000000489,
+     "acc": 0.9824,
+     "median_ms": 0.043,
+     "load_ms": 13.280582999868784,
+     "plan": "CPU 5"
+    },
+    "Core ML CPU+GPU|MLP": {
+     "batch_ms": 0.05211683329998778,
+     "one_ms": 0.0650991669999712,
+     "acc": 0.9824,
+     "median_ms": 0.06,
+     "load_ms": 2.6243330003126175,
+     "plan": "CPU 5"
+    },
+    "Core ML CPU+Neural Engine|MLP": {
+     "batch_ms": 0.03901842499999475,
+     "one_ms": 0.046998478999739746,
+     "acc": 0.9824,
+     "median_ms": 0.044,
+     "load_ms": 4.654958000173792,
+     "plan": "CPU 5"
+    },
+    "Core ML すべて|MLP": {
+     "batch_ms": 0.0394832041999507,
+     "one_ms": 0.04813291649998064,
+     "acc": 0.9824,
+     "median_ms": 0.046,
+     "load_ms": 4.901833000076294,
+     "plan": "CPU 5"
+    },
+    "C++ 素朴なループ FP32（1 スレッド, SIMD なし）|CNN": {
+     "batch_ms": 2.0043911669999943,
+     "one_ms": null,
+     "acc": 0.994,
+     "median_ms": null
+    },
+    "C++ + Accelerate FP32|CNN": {
+     "batch_ms": 0.09208920000000943,
+     "one_ms": 0.16355225000006612,
+     "acc": 0.9917,
+     "median_ms": null
+    },
+    "C++ + Accelerate FP64|CNN": {
+     "batch_ms": 0.11343059999999242,
+     "one_ms": null,
+     "acc": 0.9917,
+     "median_ms": null
+    },
+    "GPU（Metal MPSGraph）FP32|CNN": {
+     "batch_ms": 0.013044100000024627,
+     "one_ms": 0.8871575839984871,
+     "acc": 0.9917,
+     "median_ms": null
+    },
+    "Core ML FP16 CPU|CNN": {
+     "batch_ms": 0.01273388330000671,
+     "one_ms": 0.05001908350004669,
+     "acc": 0.9916,
+     "median_ms": 0.047,
+     "load_ms": 61.53020799956721,
+     "plan": "CPU 14"
+    },
+    "Core ML FP16 CPU+GPU|CNN": {
+     "batch_ms": 0.023253754100005606,
+     "one_ms": 0.05352062500014654,
+     "acc": 0.9917,
+     "median_ms": 0.047,
+     "load_ms": 54.517707999366394,
+     "plan": "CPU 1, GPU 13"
+    },
+    "Core ML FP16 CPU+Neural Engine|CNN": {
+     "batch_ms": 0.0025964916999328125,
+     "one_ms": 0.049295978999907675,
+     "acc": 0.9917,
+     "median_ms": 0.047,
+     "load_ms": 107.5025000000096,
+     "plan": "Neural Engine 14"
+    },
+    "Core ML FP16 すべて|CNN": {
+     "batch_ms": 0.002538300000014715,
+     "one_ms": 0.0491140204999283,
+     "acc": 0.9917,
+     "median_ms": 0.047,
+     "load_ms": 112.84170799990534,
+     "plan": "Neural Engine 14"
+    },
+    "Core ML CPU|CNN": {
+     "batch_ms": 0.04184052919999886,
+     "one_ms": 0.049320708500090404,
+     "acc": 0.9917,
+     "median_ms": 0.046,
+     "load_ms": 10.074249999888707,
+     "plan": "CPU 9"
+    },
+    "Core ML CPU+GPU|CNN": {
+     "batch_ms": 0.057474579199970316,
+     "one_ms": 0.06578635450023285,
+     "acc": 0.9917,
+     "median_ms": 0.06,
+     "load_ms": 2.442791999783367,
+     "plan": "CPU 9"
+    },
+    "Core ML CPU+Neural Engine|CNN": {
+     "batch_ms": 0.5313802125000621,
+     "one_ms": 0.30406387500033816,
+     "acc": 0.9917,
+     "median_ms": 0.25,
+     "load_ms": 82.80350000040926,
+     "plan": "Neural Engine 9"
+    },
+    "Core ML すべて|CNN": {
+     "batch_ms": 0.5371104708000529,
+     "one_ms": 0.30161789549993046,
+     "acc": 0.9917,
+     "median_ms": 0.219,
+     "load_ms": 10.261375000482076,
+     "plan": "Neural Engine 9"
+    }
+   }
+  }
+ },
+ "summary": "iPhone 16 Pro の CPU（Accelerate）は MLP・CNN の学習とも Mac と DGX Spark の CPU より速い（CNN 1 エポック 7.44 秒、DGX の CPU 29.0 秒）。推論は Neural Engine が最速で CNN 1 枚 2.6 µs（CPU の 4.9 倍）。ハードウェアを使わない素朴なループと比べると学習で 51 倍（CNN）〜339 倍（MLP）速い。",
+ "epoch_notes": [
+  "iPhone 16 Pro の C++ + Accelerate は MLP 662 ms・CNN 7.44 秒。Mac（2.62 秒・19.8 秒）や DGX Spark の CPU（4.25 秒・29.0 秒）より速い",
+  "iPhone の GPU（MPSGraph）は CNN 7.84 秒 で CPU と同じくらい。Mac の内蔵 GPU は 51.4 秒 で CPU より遅い",
+  "EusLisp の nn.l（Mac 27 秒）は、同じ計算の C++ の約 10 倍の時間。DGX の CUDA（CNN 426 ms）が最速"
+ ],
+ "train_notes": [
+  "FP64 は FP32 の Mac で 1.4〜1.7 倍、iPhone で 1.4〜2.4 倍の時間。iPhone の行列ユニットは FP32 が得意",
+  "GPU（MPSGraph）は FP32 のみ。最初の 1 バッチはグラフの準備（コンパイル）に使い、時間に含めない。値は 2 回の計測・2 エポックの速い方"
+ ],
+ "infer_notes": [
+  "Core ML（旧）= 1 枚ずつ受け取る NeuralNetwork 形式（FP32）。Core ML（新）= ML Program 形式（FP16）を 100 枚ずつ渡す。「すべて」は Neural Engine と同じ値なので省いた",
+  "1 枚ずつ呼ぶと、どの方法も 1 回の呼び出しの手間（数十 µs〜1 ms）が目立つ"
+ ],
+ "coreml_notes": [
+  "旧形式（1 枚ずつ, FP32）では、Neural Engine を選んでも MLP は全層が CPU。CNN は Neural Engine に載るが 531 µs で CPU（42 µs）より遅い",
+  "新形式（ML Program, FP16, 100 枚ずつ）にすると全層が Neural Engine に載り、CNN 2.6 µs・MLP 2.8 µs。CPU の 4.9 倍、GPU の 9.0 倍 速い",
+  "Neural Engine の力を出すには、FP16 の新形式にして、まとめて渡すことが必要"
+ ],
+ "hw_train_notes": [
+  "iPhone の CPU は 1 スレッドでも行列ユニットで速い。素朴なループとの差は MLP で 233 倍",
+  "Neural Engine は学習には使えない（Core ML は推論用）"
+ ],
+ "hw_infer_notes": [
+  "iPhone: 素朴なループ 2.00 ms → Accelerate 92 µs → GPU 13 µs（MPSGraph）→ Neural Engine 2.6 µs",
+  "素朴なループから Neural Engine まで約 772 倍",
+  "Mac: 素朴なループ 2.70 ms → Accelerate 224 µs → GPU 125 µs。Neural Engine はないので CPU と同じ",
+  "Core ML は新形式（FP16, 100 枚ずつ）の値"
+ ],
+ "discussion": [
+  [
+   "CPU の SIMD・行列ユニットが土台",
+   "素朴なループ → Accelerate（1 スレッド）で MLP の学習が Mac 38 倍、iPhone 233 倍。iPhone は行列ユニットの効果が大きい"
+  ],
+  [
+   "iPhone の CPU は DGX の CPU より速い",
+   "CNN の学習 7.44 秒 対 29.0 秒。小さな行列積は、コア数より 1 コアの速さと行列ユニットが効く"
+  ],
+  [
+   "Neural Engine は推論で最速",
+   "新形式（FP16）でまとめて渡すと CNN 1 枚 2.6 µs。旧形式・1 枚ずつでは CPU より遅いこともある"
+  ],
+  [
+   "GPU は大きさと種類しだい",
+   "iPhone の GPU は学習で CPU と同じくらい、推論のまとめ処理で CPU より速い。Intel Mac の GPU は CPU より遅い。DGX の GB10 は桁違い"
+  ],
+  [
+   "EusLisp は行列積以外が重い",
+   "nn.l は Mac でも DGX でも約 30 秒。同じ計算の C++ は Mac で 2.62 秒"
+  ],
+  [
+   "精度と認識数",
+   "10,000 枚で測った方法は FP64・FP32・FP16 のどれでも認識数 MLP 9824・CNN 9917（iPhone の FP16 の CPU だけ CNN 9916）。EusLisp の結果と同じ"
+  ]
+ ],
+ "conclusion": [
+  "元の EusLisp（nn.l）を Mac で動かした。1 エポック約 27 秒で DGX Spark（26.1 秒）とほぼ同じ",
+  "DGX の CUDA 版を C++ + Accelerate と MPSGraph（GPU）に移植し、Mac と iPhone 16 Pro で同じコードを動かした",
+  "iPhone の CPU は CNN 1 エポック 7.44 秒 で、Mac（19.8 秒）や DGX の CPU（29.0 秒）より速い",
+  "ハードウェアを使う・使わないの差は大きい: 素朴なループ → 行列ユニット → Neural Engine で CNN の推論が 2.00 ms → 2.6 µs（約 772 倍）",
+  "Neural Engine は推論専用。FP16 の新形式にし、まとめて渡すと力が出る",
+  "ブラウザ（Safari）は手軽だがネイティブより 1〜2 桁遅く、iPhone では WebGL の CNN の学習が止まった"
+ ],
+ "browser": {
+  "DGX Spark（Chromium）": {
+   "JavaScript（自作）|MLP 推論": 3.425800000011921,
+   "JavaScript（自作）|CNN 推論": 5.7786999999880795,
+   "JavaScript（自作）|MLP 学習": 476.4599999964237,
+   "JavaScript（自作）|CNN 学習": 465.9,
+   "TensorFlow.js WASM|MLP 推論": 0.14156000000238417,
+   "TensorFlow.js WASM|MLP 推論 1 枚ずつ": 0.5,
+   "TensorFlow.js WASM|CNN 推論": 0.265,
+   "TensorFlow.js WASM|CNN 推論 1 枚ずつ": 0.5,
+   "TensorFlow.js WASM|MLP 学習": 226.21900000035762,
+   "TensorFlow.js WebGL（GPU）|MLP 推論": 0.07682000000476838,
+   "TensorFlow.js WebGL（GPU）|MLP 推論 1 枚ずつ": 6.399999976158142,
+   "TensorFlow.js WebGL（GPU）|CNN 推論": 0.1491599999964237,
+   "TensorFlow.js WebGL（GPU）|CNN 推論 1 枚ずつ": 7.199999988079071,
+   "TensorFlow.js WebGL（GPU）|MLP 学習": 2.2969999998807906,
+   "TensorFlow.js WebGL（GPU）|CNN 学習": 10.911000000238419,
+   "TensorFlow.js WebGPU（GPU）|MLP 推論": 0.03378000000119209,
+   "TensorFlow.js WebGPU（GPU）|MLP 推論 1 枚ずつ": 3.800000011920929,
+   "TensorFlow.js WebGPU（GPU）|CNN 推論": 0.0479,
+   "TensorFlow.js WebGPU（GPU）|CNN 推論 1 枚ずつ": 5.0,
+   "TensorFlow.js WebGPU（GPU）|MLP 学習": 1.4320000004768372,
+   "TensorFlow.js WebGPU（GPU）|CNN 学習": 14.372000000476836,
+   "TensorFlow.js CPU（JS）|MLP 推論": 6.545,
+   "TensorFlow.js CPU（JS）|MLP 推論 1 枚ずつ": 5.400000035762787,
+   "TensorFlow.js CPU（JS）|CNN 推論": 9.41615000000596,
+   "TensorFlow.js CPU（JS）|CNN 推論 1 枚ずつ": 6.700000047683716,
+   "TensorFlow.js CPU（JS）|MLP 学習": 950.7480000007153,
+   "TensorFlow.js CPU（JS）|CNN 学習": 7580.718000000716
+  },
+  "Mac（Safari）": {
+   "JavaScript（自作）|MLP 推論": 3.508,
+   "JavaScript（自作）|CNN 推論": 5.054,
+   "JavaScript（自作）|MLP 学習": 353.4000000000002,
+   "JavaScript（自作）|CNN 学習": 391.5,
+   "TensorFlow.js WASM|MLP 推論": 0.15660000000000002,
+   "TensorFlow.js WASM|MLP 推論 1 枚ずつ": 1.0,
+   "TensorFlow.js WASM|CNN 推論": 0.26920000000000005,
+   "TensorFlow.js WASM|CNN 推論 1 枚ずつ": 0.0,
+   "TensorFlow.js WASM|MLP 学習": 204.13,
+   "TensorFlow.js WebGL（GPU）|MLP 推論": 0.2105,
+   "TensorFlow.js WebGL（GPU）|MLP 推論 1 枚ずつ": 8.0,
+   "TensorFlow.js WebGL（GPU）|CNN 推論": 0.3748000000000007,
+   "TensorFlow.js WebGL（GPU）|CNN 推論 1 枚ずつ": 8.0,
+   "TensorFlow.js WebGL（GPU）|MLP 学習": 5.17,
+   "TensorFlow.js WebGL（GPU）|CNN 学習": 41.76,
+   "TensorFlow.js CPU（JS）|MLP 推論": 3.382,
+   "TensorFlow.js CPU（JS）|MLP 推論 1 枚ずつ": 7.0,
+   "TensorFlow.js CPU（JS）|CNN 推論": 5.369,
+   "TensorFlow.js CPU（JS）|CNN 推論 1 枚ずつ": 6.0,
+   "TensorFlow.js CPU（JS）|MLP 学習": 898.9499999999978,
+   "TensorFlow.js CPU（JS）|CNN 学習": 10645.5
+  },
+  "iPhone（Safari）": {
+   "JavaScript（自作）|MLP 推論": 1.23,
+   "JavaScript（自作）|CNN 推論": 1.74,
+   "JavaScript（自作）|MLP 学習": 121.30000000000001,
+   "JavaScript（自作）|CNN 学習": 141.70000000000002,
+   "TensorFlow.js WASM|MLP 推論": 0.0629,
+   "TensorFlow.js WASM|MLP 推論 1 枚ずつ": 0.0,
+   "TensorFlow.js WASM|CNN 推論": 0.1071,
+   "TensorFlow.js WASM|CNN 推論 1 枚ずつ": 0.0,
+   "TensorFlow.js WASM|MLP 学習": 74.72,
+   "TensorFlow.js WebGL（GPU）|MLP 推論": 0.0167,
+   "TensorFlow.js WebGL（GPU）|MLP 推論 1 枚ずつ": 8.0,
+   "TensorFlow.js WebGL（GPU）|CNN 推論": 0.043300000000000005,
+   "TensorFlow.js WebGL（GPU）|CNN 推論 1 枚ずつ": 8.0,
+   "TensorFlow.js WebGL（GPU）|MLP 学習": 2.4899999999999998,
+   "TensorFlow.js CPU（JS）|MLP 推論": 1.607,
+   "TensorFlow.js CPU（JS）|MLP 推論 1 枚ずつ": 5.0,
+   "TensorFlow.js CPU（JS）|CNN 推論": 1.632,
+   "TensorFlow.js CPU（JS）|CNN 推論 1 枚ずつ": 1.9999999999963618,
+   "TensorFlow.js CPU（JS）|MLP 学習": 268.65,
+   "TensorFlow.js CPU（JS）|CNN 学習": 4218.3
+  }
+ },
+ "browser_methods": [
+  "JavaScript（自作）",
+  "TensorFlow.js WASM",
+  "TensorFlow.js WebGL（GPU）",
+  "TensorFlow.js WebGPU（GPU）",
+  "TensorFlow.js CPU（JS）"
+ ],
+ "browser_train_notes": [
+  "DGX: CNN 1 エポック最速は TF.js WebGL の 10.9 秒（ネイティブ CUDA 426 ms）",
+  "Mac: CNN 1 エポック最速は TF.js WebGL の 41.8 秒（同じ機器のネイティブ C++ 19.8 秒）",
+  "iPhone: CNN 1 エポック最速は JS 自作 の 142 秒（同じ機器のネイティブ C++ 7.44 秒）",
+  "WebGPU は Mac の Safari（macOS 15）では使えず、iPhone では LAN の http で開いたため使えなかった（WebGPU は https などの安全なページでだけ使える）。WASM の TF.js は CNN の学習に未対応",
+  "iPhone の Safari では TF.js WebGL の CNN の学習が途中で止まって進まなかったので、その項目だけ飛ばして測った。そのため iPhone の CNN の学習は GPU なしの値",
+  "ブラウザの JS 自作・WASM は 1 スレッド。ネイティブの Accelerate（複数コア・行列ユニット）とは大きな差がある"
+ ],
+ "browser_infer_notes": [
+  "DGX: CNN まとめての最速は TF.js WebGPU で 1 枚 48 µs",
+  "Mac: CNN まとめての最速は TF.js WASM で 1 枚 269 µs",
+  "iPhone: CNN まとめての最速は TF.js WebGL で 1 枚 43 µs",
+  "1 枚ずつは GPU を呼ぶ手間（数 ms）が目立ち、WASM（CPU）が速い。ネイティブアプリ（Core ML）はブラウザより 1〜2 桁速い"
+ ]
+}

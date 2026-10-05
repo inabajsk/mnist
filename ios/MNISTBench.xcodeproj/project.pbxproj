@@ -1,0 +1,444 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		00075C85E12C1B1913502B8C /* MetalPerformanceShaders.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 913A9CCDC9997612470E2BB2 /* MetalPerformanceShaders.framework */; };
+		0514A8904AE5A085EA407B3D /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42C95207C6AA6EA3197FAEC6 /* Metal.framework */; };
+		0F72F1E44B8BF54EE625541A /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 71BC79CF5AF6FA11DA4E005E /* Accelerate.framework */; };
+		136DAEDFF78AA2277E41A8A8 /* MNISTBenchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CDBB0C1822823CC3F77870A /* MNISTBenchApp.swift */; };
+		1E70955B88222E461D04A04E /* MNISTMLP.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = FA1DAB27A387C3343E734B97 /* MNISTMLP.mlmodel */; };
+		26BCA0F1AA9221B38D0DA2FD /* MNISTCNN_P100.mlpackage in Sources */ = {isa = PBXBuildFile; fileRef = 00C32DF35076235970B9B9B0 /* MNISTCNN_P100.mlpackage */; };
+		3D4B8E77189FCB40DA1B9856 /* mlp_w.gz.txt in Resources */ = {isa = PBXBuildFile; fileRef = D83E92A244E89D23E042C726 /* mlp_w.gz.txt */; };
+		4427D1731E64DCC925EF0CD2 /* MNISTMLP_P1.mlpackage in Sources */ = {isa = PBXBuildFile; fileRef = D68241F90B027CC87024F572 /* MNISTMLP_P1.mlpackage */; };
+		67EC50F7305B01676771135C /* cnn_w.gz.txt in Resources */ = {isa = PBXBuildFile; fileRef = 857833CE5B45B9274DBB0AFE /* cnn_w.gz.txt */; };
+		682172EB9E03205BD32C2BAC /* CoreML.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D2EA37ADCECA6AC8EBF73C8 /* CoreML.framework */; };
+		68B2700227A68D26078F2991 /* Bench.swift in Sources */ = {isa = PBXBuildFile; fileRef = E913FFEFEB7A61371AF3D388 /* Bench.swift */; };
+		6A46F6360BF89EC386D1BF7A /* mnist_test.gz.txt in Resources */ = {isa = PBXBuildFile; fileRef = 5A2AE3F7EA18495092E38A70 /* mnist_test.gz.txt */; };
+		6CDD7A32DCE2A5F939C708F9 /* MNISTCNN.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 1E969EDFB06BC92360799752 /* MNISTCNN.mlmodel */; };
+		723AB88FCD0E142E7AA49EC3 /* mnist_train6k.gz.txt in Resources */ = {isa = PBXBuildFile; fileRef = 61183ABE58A17FF20553DB35 /* mnist_train6k.gz.txt */; };
+		BA231A4826C01020ED3DD43F /* MNISTMLP_P100.mlpackage in Sources */ = {isa = PBXBuildFile; fileRef = E438E895993D8B59460BAE79 /* MNISTMLP_P100.mlpackage */; };
+		BFAA73CFA3B6BA9F64DE3DAE /* MNISTCNN_P1.mlpackage in Sources */ = {isa = PBXBuildFile; fileRef = 8697848BC1E0A8C5303F7F55 /* MNISTCNN_P1.mlpackage */; };
+		E52361801C8249B6D2FDBAAB /* GPUNet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5072EE7FB9A039F72CB261D4 /* GPUNet.swift */; };
+		E906D6184CD325BAC418AC02 /* MetalPerformanceShadersGraph.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FE1E4687EF9EC44DECF13E0 /* MetalPerformanceShadersGraph.framework */; };
+		ECF08FB84B5150BE1CD0DDA5 /* cpucnn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2A0454270B7241599706F8DE /* cpucnn.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		00C32DF35076235970B9B9B0 /* MNISTCNN_P100.mlpackage */ = {isa = PBXFileReference; path = MNISTCNN_P100.mlpackage; sourceTree = "<group>"; };
+		1E969EDFB06BC92360799752 /* MNISTCNN.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = MNISTCNN.mlmodel; sourceTree = "<group>"; };
+		2A0454270B7241599706F8DE /* cpucnn.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = cpucnn.cpp; sourceTree = "<group>"; };
+		42C95207C6AA6EA3197FAEC6 /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
+		4CDBB0C1822823CC3F77870A /* MNISTBenchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MNISTBenchApp.swift; sourceTree = "<group>"; };
+		5072EE7FB9A039F72CB261D4 /* GPUNet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GPUNet.swift; sourceTree = "<group>"; };
+		5A2AE3F7EA18495092E38A70 /* mnist_test.gz.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = mnist_test.gz.txt; sourceTree = "<group>"; };
+		61183ABE58A17FF20553DB35 /* mnist_train6k.gz.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = mnist_train6k.gz.txt; sourceTree = "<group>"; };
+		6D2EA37ADCECA6AC8EBF73C8 /* CoreML.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreML.framework; path = System/Library/Frameworks/CoreML.framework; sourceTree = SDKROOT; };
+		6FE1E4687EF9EC44DECF13E0 /* MetalPerformanceShadersGraph.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalPerformanceShadersGraph.framework; path = System/Library/Frameworks/MetalPerformanceShadersGraph.framework; sourceTree = SDKROOT; };
+		71BC79CF5AF6FA11DA4E005E /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		857833CE5B45B9274DBB0AFE /* cnn_w.gz.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = cnn_w.gz.txt; sourceTree = "<group>"; };
+		8697848BC1E0A8C5303F7F55 /* MNISTCNN_P1.mlpackage */ = {isa = PBXFileReference; path = MNISTCNN_P1.mlpackage; sourceTree = "<group>"; };
+		913A9CCDC9997612470E2BB2 /* MetalPerformanceShaders.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalPerformanceShaders.framework; path = System/Library/Frameworks/MetalPerformanceShaders.framework; sourceTree = SDKROOT; };
+		C2D29923334CD8BE3BCCF2F4 /* cpucnn.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = cpucnn.h; sourceTree = "<group>"; };
+		D68241F90B027CC87024F572 /* MNISTMLP_P1.mlpackage */ = {isa = PBXFileReference; path = MNISTMLP_P1.mlpackage; sourceTree = "<group>"; };
+		D731E8FC7083C9A327891512 /* MNISTBench.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = MNISTBench.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D83E92A244E89D23E042C726 /* mlp_w.gz.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = mlp_w.gz.txt; sourceTree = "<group>"; };
+		E438E895993D8B59460BAE79 /* MNISTMLP_P100.mlpackage */ = {isa = PBXFileReference; path = MNISTMLP_P100.mlpackage; sourceTree = "<group>"; };
+		E913FFEFEB7A61371AF3D388 /* Bench.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bench.swift; sourceTree = "<group>"; };
+		FA1DAB27A387C3343E734B97 /* MNISTMLP.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = MNISTMLP.mlmodel; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		619D9EFFB25353A3CFEFF96C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0F72F1E44B8BF54EE625541A /* Accelerate.framework in Frameworks */,
+				682172EB9E03205BD32C2BAC /* CoreML.framework in Frameworks */,
+				0514A8904AE5A085EA407B3D /* Metal.framework in Frameworks */,
+				00075C85E12C1B1913502B8C /* MetalPerformanceShaders.framework in Frameworks */,
+				E906D6184CD325BAC418AC02 /* MetalPerformanceShadersGraph.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		04353AC092E7138B9703279A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				71BC79CF5AF6FA11DA4E005E /* Accelerate.framework */,
+				6D2EA37ADCECA6AC8EBF73C8 /* CoreML.framework */,
+				42C95207C6AA6EA3197FAEC6 /* Metal.framework */,
+				913A9CCDC9997612470E2BB2 /* MetalPerformanceShaders.framework */,
+				6FE1E4687EF9EC44DECF13E0 /* MetalPerformanceShadersGraph.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		166F7D13B0AC59A4925E9C76 /* Engine */ = {
+			isa = PBXGroup;
+			children = (
+				2A0454270B7241599706F8DE /* cpucnn.cpp */,
+				C2D29923334CD8BE3BCCF2F4 /* cpucnn.h */,
+			);
+			name = Engine;
+			path = MNISTBench/Engine;
+			sourceTree = "<group>";
+		};
+		49CE50726CB605773254624D /* site */ = {
+			isa = PBXGroup;
+			children = (
+				857833CE5B45B9274DBB0AFE /* cnn_w.gz.txt */,
+				D83E92A244E89D23E042C726 /* mlp_w.gz.txt */,
+				5A2AE3F7EA18495092E38A70 /* mnist_test.gz.txt */,
+				61183ABE58A17FF20553DB35 /* mnist_train6k.gz.txt */,
+			);
+			name = site;
+			path = ../phone/site;
+			sourceTree = "<group>";
+		};
+		5DDE1CA0165268D66BD9D492 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				E913FFEFEB7A61371AF3D388 /* Bench.swift */,
+				5072EE7FB9A039F72CB261D4 /* GPUNet.swift */,
+			);
+			name = Shared;
+			path = MNISTBench/Shared;
+			sourceTree = "<group>";
+		};
+		68F1D0C60808B91252462EFF /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D731E8FC7083C9A327891512 /* MNISTBench.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		74D06CDB1B8812E20F3DDB8D /* models */ = {
+			isa = PBXGroup;
+			children = (
+				8697848BC1E0A8C5303F7F55 /* MNISTCNN_P1.mlpackage */,
+				00C32DF35076235970B9B9B0 /* MNISTCNN_P100.mlpackage */,
+				1E969EDFB06BC92360799752 /* MNISTCNN.mlmodel */,
+				D68241F90B027CC87024F572 /* MNISTMLP_P1.mlpackage */,
+				E438E895993D8B59460BAE79 /* MNISTMLP_P100.mlpackage */,
+				FA1DAB27A387C3343E734B97 /* MNISTMLP.mlmodel */,
+			);
+			path = models;
+			sourceTree = "<group>";
+		};
+		7E2ED3119755D4180F518F16 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				4CDBB0C1822823CC3F77870A /* MNISTBenchApp.swift */,
+			);
+			name = App;
+			path = MNISTBench/App;
+			sourceTree = "<group>";
+		};
+		A809D76CA904C788BF021FBE = {
+			isa = PBXGroup;
+			children = (
+				7E2ED3119755D4180F518F16 /* App */,
+				166F7D13B0AC59A4925E9C76 /* Engine */,
+				74D06CDB1B8812E20F3DDB8D /* models */,
+				5DDE1CA0165268D66BD9D492 /* Shared */,
+				49CE50726CB605773254624D /* site */,
+				04353AC092E7138B9703279A /* Frameworks */,
+				68F1D0C60808B91252462EFF /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		00B7640B24F48814CADC0089 /* MNISTBench */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F876383ACB8D4F3FC5C79375 /* Build configuration list for PBXNativeTarget "MNISTBench" */;
+			buildPhases = (
+				96843D59A945BF59951A79EE /* Sources */,
+				1FEA48541ED4716A53E97033 /* Resources */,
+				619D9EFFB25353A3CFEFF96C /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MNISTBench;
+			packageProductDependencies = (
+			);
+			productName = MNISTBench;
+			productReference = D731E8FC7083C9A327891512 /* MNISTBench.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		B5F838E3310BD1021C8C599E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					00B7640B24F48814CADC0089 = {
+						DevelopmentTeam = 39WXY2YNCK;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 25EED8AC006727439F16B185 /* Build configuration list for PBXProject "MNISTBench" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = A809D76CA904C788BF021FBE;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				00B7640B24F48814CADC0089 /* MNISTBench */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1FEA48541ED4716A53E97033 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				67EC50F7305B01676771135C /* cnn_w.gz.txt in Resources */,
+				3D4B8E77189FCB40DA1B9856 /* mlp_w.gz.txt in Resources */,
+				6A46F6360BF89EC386D1BF7A /* mnist_test.gz.txt in Resources */,
+				723AB88FCD0E142E7AA49EC3 /* mnist_train6k.gz.txt in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		96843D59A945BF59951A79EE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				68B2700227A68D26078F2991 /* Bench.swift in Sources */,
+				E52361801C8249B6D2FDBAAB /* GPUNet.swift in Sources */,
+				136DAEDFF78AA2277E41A8A8 /* MNISTBenchApp.swift in Sources */,
+				6CDD7A32DCE2A5F939C708F9 /* MNISTCNN.mlmodel in Sources */,
+				BFAA73CFA3B6BA9F64DE3DAE /* MNISTCNN_P1.mlpackage in Sources */,
+				26BCA0F1AA9221B38D0DA2FD /* MNISTCNN_P100.mlpackage in Sources */,
+				1E70955B88222E461D04A04E /* MNISTMLP.mlmodel in Sources */,
+				4427D1731E64DCC925EF0CD2 /* MNISTMLP_P1.mlpackage in Sources */,
+				BA231A4826C01020ED3DD43F /* MNISTMLP_P100.mlpackage in Sources */,
+				ECF08FB84B5150BE1CD0DDA5 /* cpucnn.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		104BF9767F9A6139A567AD42 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COREML_CODEGEN_LANGUAGE = None;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "MNIST 計測";
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = jp.jsk.mnist.MNISTBench;
+				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = MNISTBench/Shared/Bridging.h;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		7D5F5DB7E136006D3C447613 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 39WXY2YNCK;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"ACCELERATE_NEW_LAPACK=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		A5DEBA0499ED22B27DD61737 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 39WXY2YNCK;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"ACCELERATE_NEW_LAPACK=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		C3A4DE36DCC89DB2331580EB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COREML_CODEGEN_LANGUAGE = None;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "MNIST 計測";
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = jp.jsk.mnist.MNISTBench;
+				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = MNISTBench/Shared/Bridging.h;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		25EED8AC006727439F16B185 /* Build configuration list for PBXProject "MNISTBench" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A5DEBA0499ED22B27DD61737 /* Debug */,
+				7D5F5DB7E136006D3C447613 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		F876383ACB8D4F3FC5C79375 /* Build configuration list for PBXNativeTarget "MNISTBench" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				104BF9767F9A6139A567AD42 /* Debug */,
+				C3A4DE36DCC89DB2331580EB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = B5F838E3310BD1021C8C599E /* Project object */;
+}

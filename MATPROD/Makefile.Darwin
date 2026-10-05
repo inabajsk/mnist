@@ -1,10 +1,23 @@
-CC = c++ -O2 -falign-functions=8 -fPIC 
+MACHINE := $(shell uname -m | sed -e 's/arm64/aarch64/')
+CC = cc -O2 -falign-functions=8 -fPIC -D$(MACHINE)
 OBJOPT = -o 
 OUTOPT = -o 
-LD = c++
+LD = cc
 SOFLAGS = -dynamiclib -flat_namespace -undefined suppress
-EXELD = c++
+EXELD = cc
 EXESFX = 
 LSFX = so
 LPFX = lib
 LIBS = -L$(ARCHDIR) -lRAPID 
+
+CFLAGS		= -I. -I.. -fPIC -DLinux -DDarwin -w -DGCC3 -DGCC -DTHREADED -DPTHREAD -D_REENTRANT -I$(EUSDIR)/include
+# jskeus 1.2.1 (Homebrew) declares defun() with 4 arguments; matprod.c passes 5 (doc string)
+CFLAGS		+= '-Ddefun(c,n,m,f,...)=defun(c,n,m,f)'
+
+# macOS has no OpenBLAS: libaccelblas.so is an empty shim linked to Apple Accelerate,
+# because EusLisp's load-foreign cannot open libBLAS.dylib (it only exists in the dyld shared cache).
+# cblaslib.l loads it with load-foreign and finds cblas_* through the dependency.
+.DEFAULT_GOAL := default
+library: $(ARCHDIR)/libaccelblas.so
+$(ARCHDIR)/libaccelblas.so:
+	echo 'int accelblas_dummy(void){return 0;}' | cc -x c -dynamiclib -o $@ - -framework Accelerate

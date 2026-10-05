@@ -1,0 +1,192 @@
+{
+ "when": "2026-10-04T13:46:04.270Z",
+ "device": "MacBook Pro 2019 Safari",
+ "info": {
+  "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.4 Safari/605.1.15",
+  "cores": 8,
+  "memoryGB": null,
+  "screen": "1440×900 @2x",
+  "gpu": "Apple GPU",
+  "webgpu": "なし",
+  "crossOriginIsolated": false
+ },
+ "mode": "std",
+ "results": [
+  {
+   "method": "JavaScript（自作）",
+   "kind": "mlp",
+   "task": "MLP 推論",
+   "n": 1000,
+   "sec": 3.508,
+   "acc": 0.983,
+   "accOk": true
+  },
+  {
+   "method": "JavaScript（自作）",
+   "kind": "cnn",
+   "task": "CNN 推論",
+   "n": 1000,
+   "sec": 5.054,
+   "acc": 0.994,
+   "accOk": true
+  },
+  {
+   "method": "JavaScript（自作）",
+   "kind": "mlp",
+   "task": "MLP 学習",
+   "n": 600,
+   "sec": 3.534000000000002
+  },
+  {
+   "method": "JavaScript（自作）",
+   "kind": "cnn",
+   "task": "CNN 学習",
+   "n": 600,
+   "sec": 3.915
+  },
+  {
+   "method": "TensorFlow.js WASM",
+   "kind": "mlp",
+   "task": "MLP 推論",
+   "n": 10000,
+   "sec": 1.566,
+   "acc": 0.9824,
+   "accOk": true
+  },
+  {
+   "method": "TensorFlow.js WASM",
+   "kind": "mlp",
+   "task": "MLP 推論 1 枚ずつ",
+   "n": 1,
+   "sec": 0.001
+  },
+  {
+   "method": "TensorFlow.js WASM",
+   "kind": "cnn",
+   "task": "CNN 推論",
+   "n": 10000,
+   "sec": 2.692,
+   "acc": 0.9917,
+   "accOk": true
+  },
+  {
+   "method": "TensorFlow.js WASM",
+   "kind": "cnn",
+   "task": "CNN 推論 1 枚ずつ",
+   "n": 1,
+   "sec": 0
+  },
+  {
+   "method": "TensorFlow.js WASM",
+   "kind": "mlp",
+   "task": "MLP 学習",
+   "n": 6000,
+   "sec": 20.413,
+   "loss": 0.6129911804199218
+  },
+  {
+   "method": "TensorFlow.js WASM",
+   "skipped": "CNN 学習: この方法では動きません（Kernel 'Conv2DBackpropFilter' not registered for backend 'wasm'）"
+  },
+  {
+   "method": "TensorFlow.js WebGL（GPU）",
+   "kind": "mlp",
+   "task": "MLP 推論",
+   "n": 10000,
+   "sec": 2.105,
+   "acc": 0.9824,
+   "accOk": true
+  },
+  {
+   "method": "TensorFlow.js WebGL（GPU）",
+   "kind": "mlp",
+   "task": "MLP 推論 1 枚ずつ",
+   "n": 1,
+   "sec": 0.008
+  },
+  {
+   "method": "TensorFlow.js WebGL（GPU）",
+   "kind": "cnn",
+   "task": "CNN 推論",
+   "n": 10000,
+   "sec": 3.7480000000000073,
+   "acc": 0.9917,
+   "accOk": true
+  },
+  {
+   "method": "TensorFlow.js WebGL（GPU）",
+   "kind": "cnn",
+   "task": "CNN 推論 1 枚ずつ",
+   "n": 1,
+   "sec": 0.008
+  },
+  {
+   "method": "TensorFlow.js WebGL（GPU）",
+   "kind": "mlp",
+   "task": "MLP 学習",
+   "n": 6000,
+   "sec": 0.517,
+   "loss": 0.6130123138427734
+  },
+  {
+   "method": "TensorFlow.js WebGL（GPU）",
+   "kind": "cnn",
+   "task": "CNN 学習",
+   "n": 6000,
+   "sec": 4.176,
+   "loss": 1.0246517181396484
+  },
+  {
+   "method": "TensorFlow.js WebGPU（GPU）",
+   "skipped": "この端末では使えません"
+  },
+  {
+   "method": "TensorFlow.js CPU（JS）",
+   "kind": "mlp",
+   "task": "MLP 推論",
+   "n": 1000,
+   "sec": 3.382,
+   "acc": 0.983,
+   "accOk": true
+  },
+  {
+   "method": "TensorFlow.js CPU（JS）",
+   "kind": "mlp",
+   "task": "MLP 推論 1 枚ずつ",
+   "n": 1,
+   "sec": 0.007
+  },
+  {
+   "method": "TensorFlow.js CPU（JS）",
+   "kind": "cnn",
+   "task": "CNN 推論",
+   "n": 1000,
+   "sec": 5.369,
+   "acc": 0.994,
+   "accOk": true
+  },
+  {
+   "method": "TensorFlow.js CPU（JS）",
+   "kind": "cnn",
+   "task": "CNN 推論 1 枚ずつ",
+   "n": 1,
+   "sec": 0.006
+  },
+  {
+   "method": "TensorFlow.js CPU（JS）",
+   "kind": "mlp",
+   "task": "MLP 学習",
+   "n": 400,
+   "sec": 5.992999999999985,
+   "loss": 1.8150527954101563
+  },
+  {
+   "method": "TensorFlow.js CPU（JS）",
+   "kind": "cnn",
+   "task": "CNN 学習",
+   "n": 200,
+   "sec": 35.485,
+   "loss": 2.277610321044922
+  }
+ ]
+}

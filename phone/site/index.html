@@ -288,8 +288,13 @@ function tfLogits(kind, V, x) {
 function disposeV(V) { V.flat().forEach((t) => t.dispose()); }
 
 // ---------- 計測 ----------
+const RUN_ID = Date.now().toString(36);
+function postPartial() {
+  if (!location.hash.includes("post")) return;
+  try { fetch("result", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ runId: RUN_ID, partial: true, when: new Date().toISOString(), device: $("device-name").value.trim(), info, results, status: $("status").textContent }) }); } catch (e) {}
+}
 function addResult(r) {
-  results.push(r);
+  results.push(r); postPartial();
   const tb = $("resbody"); if (results.length === 1) tb.textContent = "";
   const tr = document.createElement("tr");
   const t = document.createElement("td"); t.className = "task";
@@ -359,7 +364,11 @@ async function benchTF(backend, cfg, step) {
     disposeV(V);
   } catch (e) { addSkip(`${M}`, `${kind.toUpperCase()} 推論: この方法では動きません（${e && e.message ? e.message : e}）`); } step();
   }
-  for (const kind of ["mlp", "cnn"]) { try {
+  // #...,skip=webgl-cnntrain,... : その端末で止まってしまう項目を飛ばす
+  const skips = (decodeURIComponent(location.hash).match(/skip=([^,]*(?:\+[^,]*)*)/) || [, ""])[1].split("+");
+  for (const kind of ["mlp", "cnn"]) {
+    if (skips.includes(`${backend}-${kind}train`)) { addSkip(M, `${kind.toUpperCase()} 学習: この端末では止まってしまうため飛ばした`); step(); continue; }
+    try {
     const n = small ? (kind === "cnn" ? 200 : cfg.tfCpuTrain) : cfg.tfTrain, B = 200;
     setStatus(`${M}: ${kind.toUpperCase()} の学習 ${n.toLocaleString()} 枚`); await sleep0();
     const V = tfParams(kind, randInit(kind === "mlp" ? MLP_SH : CNN_SH, 7)); const vars = V.flat();
@@ -383,7 +392,7 @@ async function benchTF(backend, cfg, step) {
   }
 }
 function addSkip(method, why) {
-  results.push({ method, skipped: why });
+  results.push({ method, skipped: why }); postPartial();
   const tb = $("resbody"); if (results.length === 1) tb.textContent = "";
   const tr = document.createElement("tr"); const a = document.createElement("td"); a.colSpan = 3; a.className = "task"; const h = document.createElement("strong"); h.textContent = SHORT[method] || method; const n = document.createElement("small"); n.textContent = why; a.append(h, n); tr.append(a); tb.append(tr);
 }
@@ -439,6 +448,11 @@ async function runAll() {
   try { wake && wake.release(); } catch (e) {}
   btn.disabled = false;
   window.__benchDone = { info, results };
+  // #autorun,post: 計測ページを配信したサーバー (phone/serve_bench.py) に結果を送る
+  if (location.hash.includes("post")) {
+    try { await fetch("result", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ runId: RUN_ID, partial: false, when: new Date().toISOString(), device: $("device-name").value.trim(), info, mode: $("mode").value, results }) });
+      setStatus("計測が終わり、結果をサーバーに送りました"); } catch (e) { setStatus("結果をサーバーに送れませんでした"); }
+  }
   try { console.log("BENCHDONE " + JSON.stringify({ info, results })); } catch (e) {}
 }
 
@@ -455,7 +469,9 @@ async function runAll() {
     db = await claude.use("db");
     if (db) db.collection("runs").orderBy("when", "desc").limit(30).onSnapshot((snap) => renderSaved(snap.docs.map((d) => d.data())), () => {});
   }
-  if (location.hash === "#autorun") runAll();
+  // #autorun で自動で計測. #autorun,post,dev=端末名 で端末名を入れて結果をサーバーに送る
+  const dv = decodeURIComponent(location.hash).match(/dev=([^,]*)/); if (dv) $("device-name").value = dv[1];
+  if (location.hash.startsWith("#autorun") && !$("run").disabled) runAll();
 })();
 </script>
 

@@ -1,0 +1,461 @@
+{
+ "info": {
+  "activeCores": "6",
+  "cores": "6",
+  "effCores": "4",
+  "gpu": "Apple A18 Pro GPU",
+  "machine": "iPhone17,1",
+  "memoryGB": "7.5",
+  "model": "D93AP",
+  "os": "Version 26.6.2 (Build 23G90)",
+  "perfCores": "2",
+  "quick": "0",
+  "thermalEnd": "fair",
+  "thermalStart": "nominal",
+  "totalSec": "43.9",
+  "name": "iPhone 16 Pro",
+  "chip": "A18 Pro"
+ },
+ "results": [
+  {
+   "kind": "mlp",
+   "loss": 0.9078934857225094,
+   "method": "C++ + Accelerate FP32",
+   "n": 6000,
+   "note": "エポック 1",
+   "sec": 0.07145737500013638,
+   "task": "MLP 学習"
+  },
+  {
+   "kind": "mlp",
+   "loss": 0.3447559571520842,
+   "method": "C++ + Accelerate FP32",
+   "n": 6000,
+   "note": "エポック 2",
+   "sec": 0.06621320900012506,
+   "task": "MLP 学習"
+  },
+  {
+   "kind": "mlp",
+   "loss": 0.9079455976178074,
+   "method": "C++ + Accelerate FP64",
+   "n": 6000,
+   "note": "エポック 1",
+   "sec": 0.1645435410000573,
+   "task": "MLP 学習"
+  },
+  {
+   "kind": "mlp",
+   "loss": 0.3447012003248137,
+   "method": "C++ + Accelerate FP64",
+   "n": 6000,
+   "note": "エポック 2",
+   "sec": 0.16338979200008907,
+   "task": "MLP 学習"
+  },
+  {
+   "kind": "mlp",
+   "loss": 0.9078934857225094,
+   "method": "C++ + Accelerate FP32（1 スレッド）",
+   "n": 6000,
+   "note": "エポック 1",
+   "sec": 0.09616575000018202,
+   "task": "MLP 学習"
+  },
+  {
+   "kind": "cnn",
+   "loss": 1.7667413465050685,
+   "method": "C++ + Accelerate FP32",
+   "n": 6000,
+   "note": "エポック 1",
+   "sec": 0.7983376250003857,
+   "task": "CNN 学習"
+  },
+  {
+   "kind": "cnn",
+   "loss": 0.4665383821432167,
+   "method": "C++ + Accelerate FP32",
+   "n": 6000,
+   "note": "エポック 2",
+   "sec": 0.755467416999636,
+   "task": "CNN 学習"
+  },
+  {
+   "kind": "cnn",
+   "loss": 1.7828919026028902,
+   "method": "C++ + Accelerate FP64",
+   "n": 6000,
+   "note": "エポック 1",
+   "sec": 1.076670207999996,
+   "task": "CNN 学習"
+  },
+  {
+   "kind": "cnn",
+   "loss": 0.525603141724305,
+   "method": "C++ + Accelerate FP64",
+   "n": 6000,
+   "note": "エポック 2",
+   "sec": 1.0967124159997184,
+   "task": "CNN 学習"
+  },
+  {
+   "kind": "cnn",
+   "loss": 1.7667413465050685,
+   "method": "C++ + Accelerate FP32（1 スレッド）",
+   "n": 6000,
+   "note": "エポック 1",
+   "sec": 1.6218560830002389,
+   "task": "CNN 学習"
+  },
+  {
+   "kind": "mlp",
+   "loss": 1.8353092971450395,
+   "method": "C++ 素朴なループ FP32（1 スレッド, SIMD なし）",
+   "n": 1000,
+   "note": "エポック 1",
+   "sec": 3.756901332999405,
+   "task": "MLP 学習"
+  },
+  {
+   "kind": "cnn",
+   "loss": 2.2645163525631573,
+   "method": "C++ 素朴なループ FP32（1 スレッド, SIMD なし）",
+   "n": 1000,
+   "note": "エポック 1",
+   "sec": 6.355709667000156,
+   "task": "CNN 学習"
+  },
+  {
+   "acc": 0.9824,
+   "kind": "mlp",
+   "method": "C++ + Accelerate FP32",
+   "n": 10000,
+   "sec": 0.04061166600058641,
+   "task": "MLP 推論"
+  },
+  {
+   "acc": 0.983,
+   "kind": "mlp",
+   "method": "C++ + Accelerate FP32",
+   "n": 1000,
+   "sec": 0.022261541999796464,
+   "task": "MLP 推論 1 枚ずつ"
+  },
+  {
+   "acc": 0.9824,
+   "kind": "mlp",
+   "method": "C++ + Accelerate FP64",
+   "n": 10000,
+   "sec": 0.10696220800036826,
+   "task": "MLP 推論"
+  },
+  {
+   "acc": 0.9917,
+   "kind": "cnn",
+   "method": "C++ + Accelerate FP32",
+   "n": 10000,
+   "sec": 0.9370704169996316,
+   "task": "CNN 推論"
+  },
+  {
+   "acc": 0.994,
+   "kind": "cnn",
+   "method": "C++ + Accelerate FP32",
+   "n": 1000,
+   "sec": 0.1654479580001862,
+   "task": "CNN 推論 1 枚ずつ"
+  },
+  {
+   "acc": 0.9917,
+   "kind": "cnn",
+   "method": "C++ + Accelerate FP64",
+   "n": 10000,
+   "sec": 1.1626250409999557,
+   "task": "CNN 推論"
+  },
+  {
+   "acc": 0.983,
+   "kind": "mlp",
+   "method": "C++ 素朴なループ FP32（1 スレッド, SIMD なし）",
+   "n": 1000,
+   "sec": 1.6338174160000563,
+   "task": "MLP 推論"
+  },
+  {
+   "acc": 0.994,
+   "kind": "cnn",
+   "method": "C++ 素朴なループ FP32（1 スレッド, SIMD なし）",
+   "n": 1000,
+   "sec": 2.0718910830000823,
+   "task": "CNN 推論"
+  },
+  {
+   "kind": "mlp",
+   "loss": 0.8490660489400228,
+   "method": "GPU（Metal MPSGraph）FP32",
+   "n": 6000,
+   "note": "エポック 1",
+   "sec": 0.10775349999948958,
+   "task": "MLP 学習"
+  },
+  {
+   "kind": "mlp",
+   "loss": 0.34010226058959964,
+   "method": "GPU（Metal MPSGraph）FP32",
+   "n": 6000,
+   "note": "エポック 2",
+   "sec": 0.07529087500006426,
+   "task": "MLP 学習"
+  },
+  {
+   "acc": 0.9824,
+   "kind": "mlp",
+   "method": "GPU（Metal MPSGraph）FP32",
+   "n": 10000,
+   "sec": 0.04998662500020146,
+   "task": "MLP 推論"
+  },
+  {
+   "acc": 0.974,
+   "kind": "mlp",
+   "method": "GPU（Metal MPSGraph）FP32",
+   "n": 500,
+   "sec": 0.3140438329992321,
+   "task": "MLP 推論 1 枚ずつ"
+  },
+  {
+   "kind": "cnn",
+   "loss": 1.6295841318766275,
+   "method": "GPU（Metal MPSGraph）FP32",
+   "n": 6000,
+   "note": "エポック 1",
+   "sec": 0.803584833000059,
+   "task": "CNN 学習"
+  },
+  {
+   "kind": "cnn",
+   "loss": 0.45767549896240234,
+   "method": "GPU（Metal MPSGraph）FP32",
+   "n": 6000,
+   "note": "エポック 2",
+   "sec": 0.8051193330002206,
+   "task": "CNN 学習"
+  },
+  {
+   "acc": 0.9917,
+   "kind": "cnn",
+   "method": "GPU（Metal MPSGraph）FP32",
+   "n": 10000,
+   "sec": 0.13348666700039757,
+   "task": "CNN 推論"
+  },
+  {
+   "acc": 0.99,
+   "kind": "cnn",
+   "method": "GPU（Metal MPSGraph）FP32",
+   "n": 500,
+   "sec": 0.4469301250001081,
+   "task": "CNN 推論 1 枚ずつ"
+  },
+  {
+   "kind": "mlp",
+   "method": "Core ML CPU",
+   "n": 1,
+   "note": "層の割り当て: CPU 5",
+   "sec": 0.01726170900019497,
+   "task": "MLP 読み込み"
+  },
+  {
+   "acc": 0.9824,
+   "kind": "mlp",
+   "method": "Core ML CPU",
+   "n": 10000,
+   "sec": 0.376726750000671,
+   "task": "MLP 推論"
+  },
+  {
+   "acc": 0.987,
+   "kind": "mlp",
+   "method": "Core ML CPU",
+   "n": 2000,
+   "note": "中央値 0.043 ms",
+   "sec": 0.08886050000000978,
+   "task": "MLP 推論 1 枚ずつ"
+  },
+  {
+   "kind": "mlp",
+   "method": "Core ML CPU+GPU",
+   "n": 1,
+   "note": "層の割り当て: CPU 5",
+   "sec": 0.002628958000059356,
+   "task": "MLP 読み込み"
+  },
+  {
+   "acc": 0.9824,
+   "kind": "mlp",
+   "method": "Core ML CPU+GPU",
+   "n": 10000,
+   "sec": 0.5372125829999277,
+   "task": "MLP 推論"
+  },
+  {
+   "acc": 0.987,
+   "kind": "mlp",
+   "method": "Core ML CPU+GPU",
+   "n": 2000,
+   "note": "中央値 0.060 ms",
+   "sec": 0.1301983339999424,
+   "task": "MLP 推論 1 枚ずつ"
+  },
+  {
+   "kind": "mlp",
+   "method": "Core ML CPU+Neural Engine",
+   "n": 1,
+   "note": "層の割り当て: CPU 5",
+   "sec": 0.005964834000224073,
+   "task": "MLP 読み込み"
+  },
+  {
+   "acc": 0.9824,
+   "kind": "mlp",
+   "method": "Core ML CPU+Neural Engine",
+   "n": 10000,
+   "sec": 0.3901842499999475,
+   "task": "MLP 推論"
+  },
+  {
+   "acc": 0.987,
+   "kind": "mlp",
+   "method": "Core ML CPU+Neural Engine",
+   "n": 2000,
+   "note": "中央値 0.044 ms",
+   "sec": 0.09399695799947949,
+   "task": "MLP 推論 1 枚ずつ"
+  },
+  {
+   "kind": "mlp",
+   "method": "Core ML すべて",
+   "n": 1,
+   "note": "層の割り当て: CPU 5",
+   "sec": 0.005151041999852168,
+   "task": "MLP 読み込み"
+  },
+  {
+   "acc": 0.9824,
+   "kind": "mlp",
+   "method": "Core ML すべて",
+   "n": 10000,
+   "sec": 0.4000882079999428,
+   "task": "MLP 推論"
+  },
+  {
+   "acc": 0.987,
+   "kind": "mlp",
+   "method": "Core ML すべて",
+   "n": 2000,
+   "note": "中央値 0.046 ms",
+   "sec": 0.0996382920002361,
+   "task": "MLP 推論 1 枚ずつ"
+  },
+  {
+   "kind": "cnn",
+   "method": "Core ML CPU",
+   "n": 1,
+   "note": "層の割り当て: CPU 9",
+   "sec": 0.010074249999888707,
+   "task": "CNN 読み込み"
+  },
+  {
+   "acc": 0.9917,
+   "kind": "cnn",
+   "method": "Core ML CPU",
+   "n": 10000,
+   "sec": 0.41840529199998855,
+   "task": "CNN 推論"
+  },
+  {
+   "acc": 0.9955,
+   "kind": "cnn",
+   "method": "Core ML CPU",
+   "n": 2000,
+   "note": "中央値 0.046 ms",
+   "sec": 0.09864141700018081,
+   "task": "CNN 推論 1 枚ずつ"
+  },
+  {
+   "kind": "cnn",
+   "method": "Core ML CPU+GPU",
+   "n": 1,
+   "note": "層の割り当て: CPU 9",
+   "sec": 0.004241458000251441,
+   "task": "CNN 読み込み"
+  },
+  {
+   "acc": 0.9917,
+   "kind": "cnn",
+   "method": "Core ML CPU+GPU",
+   "n": 10000,
+   "sec": 0.5840779999998631,
+   "task": "CNN 推論"
+  },
+  {
+   "acc": 0.9955,
+   "kind": "cnn",
+   "method": "Core ML CPU+GPU",
+   "n": 2000,
+   "note": "中央値 0.060 ms",
+   "sec": 0.1325425830000313,
+   "task": "CNN 推論 1 枚ずつ"
+  },
+  {
+   "kind": "cnn",
+   "method": "Core ML CPU+Neural Engine",
+   "n": 1,
+   "note": "層の割り当て: Neural Engine 9",
+   "sec": 0.1144758330001423,
+   "task": "CNN 読み込み"
+  },
+  {
+   "acc": 0.9917,
+   "kind": "cnn",
+   "method": "Core ML CPU+Neural Engine",
+   "n": 10000,
+   "sec": 5.518765416999486,
+   "task": "CNN 推論"
+  },
+  {
+   "acc": 0.9955,
+   "kind": "cnn",
+   "method": "Core ML CPU+Neural Engine",
+   "n": 2000,
+   "note": "中央値 0.250 ms",
+   "sec": 0.6923482089996469,
+   "task": "CNN 推論 1 枚ずつ"
+  },
+  {
+   "kind": "cnn",
+   "method": "Core ML すべて",
+   "n": 1,
+   "note": "層の割り当て: Neural Engine 9",
+   "sec": 0.011381416999938665,
+   "task": "CNN 読み込み"
+  },
+  {
+   "acc": 0.9917,
+   "kind": "cnn",
+   "method": "Core ML すべて",
+   "n": 10000,
+   "sec": 5.549055167000006,
+   "task": "CNN 推論"
+  },
+  {
+   "acc": 0.9955,
+   "kind": "cnn",
+   "method": "Core ML すべて",
+   "n": 2000,
+   "note": "中央値 0.219 ms",
+   "sec": 0.6313503330002277,
+   "task": "CNN 推論 1 枚ずつ"
+  }
+ ]
+}
